@@ -20,7 +20,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client/dist')));
 
 // app.use('/', index);
 // app.use('/users', users);
@@ -31,11 +31,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
-
-// Set Static Folder
-//share path of our angular stuff (\client)
-app.use(express.static(path.join(__dirname, 'client')));
 
 // error handler
 app.use(function(err, req, res, next) {
