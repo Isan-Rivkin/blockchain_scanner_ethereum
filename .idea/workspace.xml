@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2165a06-e39d-4fbd-b0ee-047f3213d250" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logic/data/known_addresses.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logic/etherscan/backup.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logic/etherscan/explore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logic/etherscan/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logic/scanner/scanner.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logic/scanner/utils.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -457,7 +448,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="923000" />
+    <option name="totallyTimeSpent" value="1007000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="962" extended-state="6" />
