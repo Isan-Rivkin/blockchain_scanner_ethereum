@@ -78,9 +78,10 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   private sendAddres(addres){
-    console.log("addr: "+ addres);
-    let newData =this.explorerAgentService.getTransactions(addres);
-    console.log(newData);
+
+    this.explorerAgentService.sendAddress(addres);
+    //let newData =this.explorerAgentService.getTransactions(addres);
+    //console.log(newData);
     //this.updateData(newData);
 
   }
