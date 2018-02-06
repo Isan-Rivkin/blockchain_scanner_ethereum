@@ -14,6 +14,7 @@ router.get('/', function(req, res, next) {
     var direction = "to";
     scanner.one_level_graph({address:address,tx_direction:direction},(nodes,edges)=>{
         res.json({nodes:nodes,edges:edges});
+
     });
 });
 
