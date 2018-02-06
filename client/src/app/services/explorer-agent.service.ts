@@ -34,6 +34,7 @@ export class ExplorerAgentService {
     //get new data
     let observable = new Observable(observer => {
 
+<<<<<<< HEAD
       this.socket.on('new_data', (data) => {
         observer.next(data);
       });
@@ -43,6 +44,15 @@ export class ExplorerAgentService {
     })
     return observable;
   }
+=======
+  // getTransactions(address){
+  //   console.log("send "+ address);
+  //   this.http.get('the url').then((result)=>{
+  //     //result.nodes, result.edges})
+  //   }
+  //   //map(res=>res);
+  // }
+>>>>>>> 0dc15d65ad44f9e3883827bd885f1118d8b1a6a2
 
 
 
