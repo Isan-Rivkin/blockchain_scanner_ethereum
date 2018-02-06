@@ -12,13 +12,13 @@ export class ExplorerAgentService {
     console.log("Task services initialized..");
   }
 
-  getTransactions(address){
-    console.log("send "+ address);
-    this.http.get('the url').then((result)=>{
-      //result.nodes, result.edges})
-    }
-    //map(res=>res);
-  }
+  // getTransactions(address){
+  //   console.log("send "+ address);
+  //   this.http.get('the url').then((result)=>{
+  //     //result.nodes, result.edges})
+  //   }
+  //   //map(res=>res);
+  // }
 
 
 
