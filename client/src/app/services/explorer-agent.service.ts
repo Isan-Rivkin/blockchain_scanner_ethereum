@@ -40,7 +40,7 @@ export class ExplorerAgentService {
       return () => {
         this.socket.disconnect();
       };
-    })
+    });
     return observable;
   }
   // getTransactions(address){

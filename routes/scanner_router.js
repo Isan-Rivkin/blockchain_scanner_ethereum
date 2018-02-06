@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
     var direction = "to";
     scanner.one_level_graph({address:address,tx_direction:direction},(nodes,edges)=>{
         res.json({nodes:nodes,edges:edges});
-
     });
 });
 
@@ -29,8 +28,12 @@ module.exports = {
                 console.log('user disconnected');
             });
             //io.emit('candle_update', {msg:"perfect"});
-            socket.on('scan_request',function(data){
-                console.log(data);
+            socket.on('scan_request',function(origin_address){
+                var address = origin_address;
+                var direction = "to";
+                scanner.one_level_graph({address:address,tx_direction:direction},(nodes,edges)=>{
+                    io.emit('scan_response',{nodes:nodes,edges:edges});
+                });
             });
         });
     }
