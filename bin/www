@@ -89,3 +89,25 @@ function onListening() {
   console.log('Listening on ' + bind);
   debug('Listening on ' + bind);
 }
+
+//socket.io
+// http = require('http').Server(app);
+// let  io = require('socket.io')(http);
+//
+// io.on('connection', (socket) => {
+//     console.log('user connected');
+//     //io.emit('connection', "connection");
+//
+//     socket.on('disconnect', function(){
+//         console.log('user disconnected');
+//     });
+//
+//     socket.on('get-transactions', () => {
+//         // Get content from file
+//         var contents = fs.readFileSync("./logic/data/test-data.json");
+//         // Define to JSON type
+//         var jsonContent = JSON.parse(contents);
+//         console.log(jsonContent);
+//         io.emit('transactions', jsonContent);
+//     });
+// });

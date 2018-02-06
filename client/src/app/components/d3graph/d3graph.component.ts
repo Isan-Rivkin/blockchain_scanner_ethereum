@@ -1,7 +1,9 @@
 //our root app component
-import {Component, NgModule, OnInit, AfterViewInit, OnDestroy, ViewEncapsulation} from '@angular/core'
+import {Component, NgModule, OnInit, AfterViewInit, OnDestroy, ViewEncapsulation,} from '@angular/core'
+import {ExplorerAgentService} from '../../services/explorer-agent.service'
 import {test_data} from './test_data'
 import * as d3 from './D3config';
+
 
 @Component({
   selector: 'app-d3graph',
@@ -13,6 +15,7 @@ import * as d3 from './D3config';
     </div>
     <svg width="960" height="600"></svg>
   `,
+  providers: [ExplorerAgentService],
 
 
 })
@@ -23,13 +26,25 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
   simulation;
   link;
   node;
-  constructor() {
+  data;
+  connection;
+  constructor(private  explorerAgentService:ExplorerAgentService) {
     this.name = 'Etherscan'
-  }
-
-  ngOnInit(){
 
   }
+
+  ngOnInit() {
+    // this.connection= this.explorerAgentService.getData().subscribe(data => {
+    //   this.data =data;
+    // })
+    //this.connection = this.explorerAgentService.test();
+  }
+
+  ngOnDestroy() {
+    this.connection.unsubscribe();
+  }
+
+
 
   private showTooltip(d) {
     var tooltip = d3.select("body").append("div")
@@ -48,6 +63,22 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
       .remove()
 
   }
+
+  private updateData(newData){
+
+    let newNode = newData.nodes;
+    let newLink = newData.links;
+    console.log("new nodes :" + newNode);
+    console.log("new links :" + newLink);
+
+  }
+  private sendAddres(addres){
+    console.log("addr: "+ addres);
+    let newData =this.explorerAgentService.getTransactions(addres);
+    this.updateData(newData);
+
+  }
+
   ngAfterViewInit(){
 
     this.svg = d3.select("svg");
@@ -79,7 +110,11 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
       })
       .on("mouseout", (d)=> {
         this.hideTooltip();
+      })
+      .on("click",(d)=>{
+        this.sendAddres(d.address);
       });
+
 
   }
 
@@ -90,7 +125,7 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
       .selectAll("line")
       .data(graph.links)
       .enter().append("line")
-      .attr("stroke-width", (d)=> { return Math.sqrt(d.value); });
+      .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
     this.node = this.svg.append("g")
       .attr("class", "nodes")
@@ -134,7 +169,5 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
     d.fy = d.y;
   }
 
-  ngOnDestroy(){
 
-  }
 }
