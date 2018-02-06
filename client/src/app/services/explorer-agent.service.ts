@@ -1,7 +1,7 @@
 import { Injectable} from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import * as io from 'socket.io-client';
+//import * as io from 'socket.io-client';
 import {test_data} from '../components/d3graph/test_data'
 
 @Injectable()

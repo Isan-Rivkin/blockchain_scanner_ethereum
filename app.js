@@ -8,7 +8,7 @@ var fs = require('fs');
 
 // var index = require('./routes/index');
 // var users = require('./routes/users');
-
+var scanner = require('./routes/scanner_router');
 var app = express();
 
 
@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'client/dist')));
 
 // app.use('/', index);
 // app.use('/users', users);
-
+app.use('/scanner',scanner);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
