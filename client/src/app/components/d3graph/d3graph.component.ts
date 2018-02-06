@@ -33,11 +33,16 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  ngOnInit() {
+  //ngOnInit() {
     // this.connection= this.explorerAgentService.getData().subscribe(data => {
     //   this.data =data;
     // })
     //this.connection = this.explorerAgentService.test();
+  //}
+  ngOnInit() {
+    this.connection = this.explorerAgentService.getTransactions().subscribe(newdata => {
+      console.log("new data: "+ newdata);
+    })
   }
 
   ngOnDestroy() {
@@ -75,6 +80,7 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
   private sendAddres(addres){
     console.log("addr: "+ addres);
     let newData =this.explorerAgentService.getTransactions(addres);
+    console.log(newData);
     //this.updateData(newData);
 
   }
