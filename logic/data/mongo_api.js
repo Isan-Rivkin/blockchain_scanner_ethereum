@@ -86,3 +86,43 @@ module.exports.list_entity = function(callback){
         findDocuments(db,client,callback);
     });
 };
+
+/* QUERY SEACH OPERATION */
+
+var queryDocument = function(db,client,query, callback) {
+    // Get the documents collection
+    const collection = db.collection(entities_collection);
+    // Find some documents
+    collection.find(query).toArray(function(err, docs){
+        client.close();
+        callback(docs);
+    });
+};
+
+module.exports.query_entities = function(query,callback){
+    connect((db,client)=>{
+        queryDocument(db,client,query,callback);
+    });
+};
+
+/* GROUP BY OPERATION */
+
+var groupBy = function(db,client,param,callback){
+    // Get the documents collection
+    param = "$"+param;
+    const collection = db.collection(entities_collection);
+    collection.aggregate([
+        {"$group":{_id: param,count:{$sum:1}}}
+    ]).toArray(function(err, docs) {
+        if(err) {console.log(err);}
+        client.close();
+        callback(docs);
+    });
+};
+
+module.exports.group_by_good_aggregate = function(group_param,callback){
+    connect((db,client)=>{
+        groupBy(db,client,group_param,callback);
+    });
+};
+

@@ -43,3 +43,16 @@ var bad ={
 //     console.log(result);
 // });
 
+// query - search
+// let query ={good:false};
+// mongo.query_entities(query,(docs)=>{
+//     console.log(docs);
+// });
+
+// group by interesting//type//good
+// mongo.group_by_good_aggregate('interesting',(docs)=>{
+//     console.log(docs);
+// });
+
+
+
