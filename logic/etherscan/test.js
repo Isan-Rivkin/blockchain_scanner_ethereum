@@ -7,10 +7,20 @@ my_addr = '0x0607B0c8cF73D916b3EF1463bb6fB9f19e9D5D98';
 omg_addr = '0xd26114cd6EE289AccF82350c8d8487fedB8A0C07';
 non_token = '0x7c2A856B4AeE9EDbC3A5Fdd1697C0B36bFa2131D';
 some_miner = '0xea674fdde714fd979de3edf0f56aa9716b898ec8';
+distributer = '0x1151314c646Ce4E0eFD76d1aF4760aE66a9Fe30F';
+not_valid_addr = '0xB79335eA0Ba39494CE839613fffBA74279579268';
+var bigaddr = '0x75E7F640bf6968b6f32C47a3Cd82C3C2C9dCae68';
+// classify as exchanges
+bittrex = '0xFBb1b73C4f0BDa4f67dcA266ce6Ef42f520fBB98';
+poloniex_wallet = '0x32Be343B94f860124dC4fEe278FDCBD38C102D88';
+poloniex_coldWallet = '0xb794F5eA0ba39494cE839613fffBA74279579268';
+eth_delta = '0x8d12A197cB00D4747a1fe03395095ce2A5CC6819';
 
 var explorer = require('./explore');
 var urlBuilder = new explorer.URLBuilder();
-
+var Scanner = require('../scanner/scanner');
+var ExplorerUtils = require("../scanner/utils");
+var utils = new ExplorerUtils.ExplorerUtils();
 /**********************************************************/
 /******************** Account Explorer ********************/
 /**********************************************************/
@@ -24,7 +34,7 @@ accountExplorer = new explorer.AccountExplorer(urlBuilder,API_KEY);
 // accountExplorer.explore_multiple_balances_from_addr([my_addr,omg_addr],(balances)=>{
 //     console.log(balances);
 // });
-//list of sent transactions from a specific address
+//number of sent transactions from a specific address
 // accountExplorer.explore_sent_tx_num_addr(my_addr,(num)=>{
 //     console.log(num);
 // });
@@ -98,7 +108,7 @@ var tempContract = entityDefiner.contract();
 var tempTx = entityDefiner.transaction();
 
 // explore list of transactions form an address
-// tempTx.explore_txs_from_addr_paginated(my_addr,1,15,null,(txList)=>{
+// tempTx.explore_txs_from_addr_paginated(eth_delta,1,15,null,(txList)=>{
 //     console.log(txList);
 // });
 
@@ -122,27 +132,57 @@ var tempTx = entityDefiner.transaction();
 // });
 
 // is addr is a contract - non token erc20
-// entityDefiner.is_contract_not_token(non_token,(result)=>{
+// entityDefiner.is_contract_not_token(bittrex,(result)=>{
 // 	console.log(result);
+// });
+//
+
+// is addr is distributer (e.g high txns low balance)
+//{address:addr,ether: result.ether ,is_distributer:false}
+// entityDefiner.is_distributer(my_addr,(result)=>{
+//     console.log(result.is_distributer);
+// });
+//
+
+// is addr exchange (e.g high txns AND balance)
+// entityDefiner.is_exchange(bittrex,(result)=>{
+//     console.log(result);
+// });
+
+// is a regular user // non of the others
+// entityDefiner.is_user(my_addr,(result)=>{
+//     console.log(result);
+// })
+
+// is a validaddress
+//     entityDefiner.is_valid_address(not_valid_addr,(result)=>{
+//         console.log(result.is_valid_address);
+//     });
+
+// identify
+// entityDefiner.identify(bittrex,(result)=>{
+//     console.log(result);
 // });
 
 
 
-/*
-	BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG
-	BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG
-	BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG
-	On really big tx number like poloniex_wallet and bittrex returns null from general tx list explorer...
+/**********************************************************/
+/********************* Full scanner Tests  **********************/
+/**********************************************************/
+let maxDepth = 3;
+let maxPage = 1;
+let maxPageResult = 10;
 
-*/
-var bittrex = '0xFBb1b73C4f0BDa4f67dcA266ce6Ef42f520fBB98';
-var poloniex_wallet = '0x32Be343B94f860124dC4fEe278FDCBD38C102D88';
-var poloniex_coldWallet = '0xb794F5eA0ba39494cE839613fffBA74279579268';
+var scanner = new Scanner.Scanner(maxDepth,maxPage,maxPageResult);
+addrs = [my_addr,omg_addr,bittrex,some_miner,poloniex_coldWallet,eth_delta];
 
-entityDefiner.is_exchange(poloniex_coldWallet,(result)=>{
-    console.log(result);
-});
+// scanner.identify_all(addrs,(entities)=>{
+//     console.log(entities)
+// });
 
 
+// scanner.one_level_graph({address:bittrex,tx_diection:'to'},(nodes,edges)=>{
+//        utils.printGraph(nodes,edges,null);
+// });
 
 
