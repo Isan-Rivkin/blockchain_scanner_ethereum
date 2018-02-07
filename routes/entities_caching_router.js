@@ -28,7 +28,7 @@ module.exports = {
             });
             socket.on('list_entity',function(){
                 // get all entitites
-                // emit
+
             });
             socket.on('edit-entity',function(entity){
                 // edit entity

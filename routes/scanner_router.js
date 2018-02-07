@@ -179,19 +179,22 @@ module.exports = {
     setIO: function(iop){
         io = iop;
         io.on('connection',function(socket){
-            console.log('user connected');
+            console.log('user connected'+socket.id);
             socket.on('disconnect', function(){
                 console.log('user disconnected');
             });
             //io.emit('candle_update', {msg:"perfect"});
             socket.on('scan_request',function(origin_address){
                 console.log("querying " + origin_address);
+                if(origin_address.length != 42){
+                    socket.emit('scan_response',{nodes:null,edges:null});
+                }
                 handle_scan_query(origin_address,(res)=>{
                     if(res != null){
                         console.log("RESULT => " + JSON.stringify(res));
-                        io.emit('scan_response',{nodes:res.nodes,edges:res.edges});
+                        socket.emit('scan_response',{nodes:res.nodes,edges:res.edges});
                     }else{ // no result;
-                        io.emit('scan_response',{nodes:null,edges:null});
+                        socket.emit('scan_response',{nodes:null,edges:null});
                     }
                 });
             });
