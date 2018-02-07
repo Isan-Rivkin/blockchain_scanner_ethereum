@@ -19,9 +19,10 @@ import * as d3 from './D3config';
     
       <div class="address-group">
         <label for="str">Address:</label>
-        <input id = "str" [(ngModel)]="root" class="form-control">
+        <input id = "str" [(ngModel)]="root"  placeholder="Enter public key" class="form-control">
+        <button (click)="SendAddButton()" class="btn btn-default">Send</button>
       </div>
-      <button (click)="SendAddButton()" class="btn btn-default">Send</button>
+     
     <svg [attr.width]="960" [attr.height]="600"></svg>
   `,
   providers: [ExplorerAgentService],
@@ -67,7 +68,9 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private SendAddButton(){
-    this.sendAddres(this.root);
+    if (this.root != null) {
+      this.sendAddres(this.root);
+    }
   }
 
   private attachID(setData){

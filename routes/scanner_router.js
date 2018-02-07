@@ -62,7 +62,6 @@ Number.prototype.noExponents= function(){
 }
 
 
-var origin_addr = eth_delta;
 function handle_scan_query(address,callback){
     scanner = new Scanner.Scanner(10,1,500);
     scanner.entityDefiner.transaction_explorer.explore_txs_from_addr_paginated(address,1,10,null,(txns)=>{
