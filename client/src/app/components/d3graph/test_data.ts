@@ -16,7 +16,7 @@ export var test_data= {
     {"id": "14", "address" : "0x14","type" : "contract", "balance" : "12.2", "group": 2},
     {"id": "15", "address" : "0x15","type" : "exchange", "balance" : "12.2", "group": 4}
 ],
-    "links": [
+    "edges": [
     {"source": "1", "target": "4", "value": 2},
     {"source": "1", "target": "3", "value": 1.5},
     {"source": "1", "target": "2", "value": 7},

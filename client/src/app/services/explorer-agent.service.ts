@@ -1,5 +1,5 @@
 import { Injectable} from '@angular/core';
-import {Http} from "@angular/http";
+//import {Http} from "@angular/http";
 import 'rxjs/add/operator/map'
 //import {test_data} from '../components/d3graph/test_data'
 
@@ -17,15 +17,7 @@ export class ExplorerAgentService {
     this.socket = io(this.url);
   }
 
-  // constructor(private http:Http) {
-  //   console.log("Task services initialized..");
-  // }
-
-  // getTransactions(address){
-  //   console.log("send "+ address);
-  //   return this.http.get(this.url+"/scanner").map(res=>res);
-  //}
-
+//socket io
   sendAddress(address){
     //sent address
     this.socket.emit('scan_request', address);
@@ -43,6 +35,17 @@ export class ExplorerAgentService {
     })
     return observable;
   }
+
+  //http
+  // constructor(private http:Http) {
+  //   console.log("Task services initialized..");
+  // }
+
+  // getTransactions(address){
+  //   console.log("send "+ address);
+  //   return this.http.get(this.url+"/scanner").map(res=>res);
+  //}
+
   // getTransactions(address){
   //   console.log("send "+ address);
   //   this.http.get('the url').then((result)=>{

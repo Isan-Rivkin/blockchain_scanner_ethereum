@@ -1,8 +1,11 @@
 //our root app component
+'use strict';
 import {Component, NgModule, OnInit, AfterViewInit, OnDestroy, ViewEncapsulation,} from '@angular/core'
 import {ExplorerAgentService} from '../../services/explorer-agent.service'
 import {test_data} from './test_data'
+import {test_data2} from './test_data_2'
 import * as d3 from './D3config';
+import {uptime} from "os";
 
 
 @Component({
@@ -13,6 +16,8 @@ import * as d3 from './D3config';
     <div>
       <h2>{{name}}</h2>
     </div>
+    <input id="str" [(ngModel)]="root"/>
+    <button (click)="SendAddButton()">Send</button>
     <svg width="960" height="600"></svg>
   `,
   providers: [ExplorerAgentService],
@@ -21,24 +26,27 @@ import * as d3 from './D3config';
 })
 export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
   name:string;
+  root:string
   svg;
   color;
   simulation;
   link;
   node;
-  data;
+  data  = {
+    nodes: [],
+    edges: []
+};
+  map = new Map();
+  ids;
   connection;
-  constructor(private  explorerAgentService:ExplorerAgentService) {
-    this.name = 'Etherscan'
 
+  constructor(private  explorerAgentService:ExplorerAgentService) {
+    this.name = 'Etherscan';
+    this.ids=1;
+    this.attachID(test_data2);
+    this.setIDLinks(test_data2);
   }
 
-  //ngOnInit() {
-    // this.connection= this.explorerAgentService.getData().subscribe(data => {
-    //   this.data =data;
-    // })
-    //this.connection = this.explorerAgentService.test();
-  //}
   ngOnInit() {
     this.connection = this.explorerAgentService.getTransactions().subscribe(newdata => {
       console.log("new data: "+ newdata);
@@ -47,6 +55,35 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.connection.unsubscribe();
+  }
+
+  private SendAddButton(){
+    this.sendAddres(this.root);
+  }
+
+  private attachID(setData){
+    setData.nodes.forEach(node=>{
+      node.address =node.address.toLowerCase();
+      if(this.map.has(node.address)){
+
+      }else{
+          this.map.set(node.address,this.ids);
+          node.id = this.ids;
+          this.ids++;
+          this.data.nodes.push(node);
+      }
+    });
+
+  }
+  private setIDLinks(setData){
+
+    setData.edges.forEach(edge=>{
+      edge.source = this.map.get(edge.from);
+      edge.target = this.map.get(edge.to);
+      this.data.edges.push(edge);
+    });
+
+
   }
 
 
@@ -58,7 +95,7 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
     tooltip.transition()
         .duration(200)
         .style("opacity", .9);
-    tooltip	.html("Address: " + d.address + "<br/>"  + "Type: " + d.type +"</br>"+ "Balance: " + d.balance + "<br/>")
+    tooltip	.html("Address: " + d.address + "<br/>"  + "Type: " + d.type +"</br>"+ "Ether: " + d.ether + "<br/>"+ "OutTX: " + d.outTX + "<br/>"+ "Valid Address: " + d.is_valid_address + "<br/>")
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY - 28) + "px");
     }
@@ -70,19 +107,23 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private updateData(newData){
-
-    let newNode = newData.nodes;
-    let newLink = newData.links;
-    console.log("new nodes :" + newNode);
-    console.log("new links :" + newLink);
+    console.log("new data: "+ newData);
+    this.attachID(newData);
+    this.setIDLinks(newData)
+    // let newNode = newData.nodes;
+    // let newLink = newData.links;
+    // console.log("new nodes :" + newNode);
+    // console.log("new links :" + newLink);
 
   }
   private sendAddres(addres){
-
     this.explorerAgentService.sendAddress(addres);
-    //let newData =this.explorerAgentService.getTransactions(addres);
-    //console.log(newData);
-    //this.updateData(newData);
+
+    this.explorerAgentService.getTransactions().subscribe(newdata => {
+      this.updateData(newdata);
+    });
+
+
 
   }
 
@@ -99,7 +140,7 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(width / 2, height / 2));
 
-    this.render(test_data);
+    this.render(this.data);
   }
 
   ticked() {
@@ -128,9 +169,9 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
 
   render(graph){
     this.link = this.svg.append("g")
-      .attr("class", "links")
+      .attr("class", "edges")
       .selectAll("line")
-      .data(graph.links)
+      .data(graph.edges)
       .enter().append("line")
       .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
@@ -140,7 +181,7 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
       .data(graph.nodes)
       .enter().append("circle")
       .attr("r", 5)
-      .attr("fill", (d)=> { return this.color(d.group); })
+      .attr("fill", (d)=> { return this.color(d.type); })
       .call(d3.drag()
         .on("start", (d)=>{return this.dragstarted(d)})
         .on("drag", (d)=>{return this.dragged(d)})
@@ -156,7 +197,7 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
       .on("tick", ()=>{return this.ticked()});
 
     this.simulation.force("link")
-      .links(graph.links);
+      .links(graph.edges);
   }
 
   dragged(d) {
