@@ -21,12 +21,13 @@ export class ExplorerAgentService {
   sendAddress(address){
     //sent address
     this.socket.emit('scan_request', address);
+    console.log("send: " + address);
   }
   getTransactions() {
     //get new data
     let observable = new Observable(observer => {
 
-      this.socket.on('new_data', (data) => {
+      this.socket.on('scan_response', (data) => {
         observer.next(data);
       });
       return () => {

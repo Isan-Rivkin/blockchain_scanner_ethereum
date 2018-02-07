@@ -36,7 +36,8 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
     nodes: [],
     edges: []
 };
-  map = new Map();
+  nodeMap = new Map();
+  searchArr =[];
   ids;
   connection;
 
@@ -64,10 +65,10 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
   private attachID(setData){
     setData.nodes.forEach(node=>{
       node.address =node.address.toLowerCase();
-      if(this.map.has(node.address)){
+      if(this.nodeMap.has(node.address)){
 
       }else{
-          this.map.set(node.address,this.ids);
+          this.nodeMap.set(node.address,this.ids);
           node.id = this.ids;
           this.ids++;
           this.data.nodes.push(node);
@@ -78,8 +79,8 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
   private setIDLinks(setData){
 
     setData.edges.forEach(edge=>{
-      edge.source = this.map.get(edge.from);
-      edge.target = this.map.get(edge.to);
+      edge.source = this.nodeMap.get(edge.from);
+      edge.target = this.nodeMap.get(edge.to);
       this.data.edges.push(edge);
     });
 
@@ -109,7 +110,10 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
   private updateData(newData){
     console.log("new data: "+ newData);
     this.attachID(newData);
-    this.setIDLinks(newData)
+    this.setIDLinks(newData);
+    console.log(this.data);
+
+    this.draw();
     // let newNode = newData.nodes;
     // let newLink = newData.links;
     // console.log("new nodes :" + newNode);
@@ -117,17 +121,25 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   private sendAddres(addres){
-    this.explorerAgentService.sendAddress(addres);
 
-    this.explorerAgentService.getTransactions().subscribe(newdata => {
-      this.updateData(newdata);
-    });
+    if(this.searchArr.indexOf(addres)<0) {
+      this.searchArr.push(addres);
+      this.explorerAgentService.sendAddress(addres);
 
+      this.explorerAgentService.getTransactions().subscribe(newdata => {
+        console.log("nodes: " + newdata['nodes']);
+        console.log("edges: " + newdata['edges']);
 
+        this.updateData(newdata);
+
+      });
+      console.log(this.searchArr);
+
+    }
 
   }
-
   ngAfterViewInit(){
+
 
     this.svg = d3.select("svg");
 
@@ -139,6 +151,18 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
       .force("link", d3.forceLink().id((d)=> { return d['id']; }))
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(width / 2, height / 2));
+
+    this.render(this.data);
+  }
+  draw(){
+
+    d3.select("svg").selectAll('g').remove();
+
+    this.svg = d3.select("svg");
+    this.color = d3.scaleOrdinal(d3.schemeCategory20);
+    this.simulation = d3.forceSimulation()
+      .force("link", d3.forceLink().id((d)=> { return d['id']; }))
+      .force("charge", d3.forceManyBody());
 
     this.render(this.data);
   }
