@@ -5,7 +5,7 @@ import {ExplorerAgentService} from '../../services/explorer-agent.service'
 import {test_data} from './test_data'
 import {test_data2} from './test_data_2'
 import * as d3 from './D3config';
-import {uptime} from "os";
+
 
 
 @Component({
@@ -18,7 +18,7 @@ import {uptime} from "os";
     </div>
     <input id="str" [(ngModel)]="root"/>
     <button (click)="SendAddButton()">Send</button>
-    <svg width="960" height="600"></svg>
+    <svg [attr.width]="960" [attr.height]="600"></svg>
   `,
   providers: [ExplorerAgentService],
 
@@ -26,12 +26,14 @@ import {uptime} from "os";
 })
 export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
   name:string;
-  root:string
+  root:string;
   svg;
   color;
   simulation;
   link;
   node;
+  width = 960;
+  height = 600;
   data  = {
     nodes: [],
     edges: []
@@ -44,8 +46,10 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private  explorerAgentService:ExplorerAgentService) {
     this.name = 'Etherscan';
     this.ids=1;
-    this.attachID(test_data2);
-    this.setIDLinks(test_data2);
+
+
+    // this.attachID(test_data2);
+    // this.setIDLinks(test_data2);
   }
 
   ngOnInit() {
@@ -122,8 +126,8 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   private sendAddres(addres){
 
-    if(this.searchArr.indexOf(addres)<0) {
-      this.searchArr.push(addres);
+    if(this.searchArr.indexOf(addres.toLowerCase())<0) {
+      this.searchArr.push(addres.toLowerCase());
       this.explorerAgentService.sendAddress(addres);
 
       this.explorerAgentService.getTransactions().subscribe(newdata => {
@@ -139,30 +143,33 @@ export class D3graphComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   ngAfterViewInit(){
-
-
+    if(this.data.edges.length>0){
     this.svg = d3.select("svg");
 
-    var width = +this.svg.attr("width");
-    var height = +this.svg.attr("height");
+     this.width = this.svg.attr("width");
+     this.height = this.svg.attr("height");
 
     this.color = d3.scaleOrdinal(d3.schemeCategory20);
     this.simulation = d3.forceSimulation()
       .force("link", d3.forceLink().id((d)=> { return d['id']; }))
       .force("charge", d3.forceManyBody())
-      .force("center", d3.forceCenter(width / 2, height / 2));
+      .force("center", d3.forceCenter(this.width / 2, this.height / 2));
 
     this.render(this.data);
   }
+  }
   draw(){
 
-    d3.select("svg").selectAll('g').remove();
 
+    d3.select("svg").selectAll('g').remove();
     this.svg = d3.select("svg");
     this.color = d3.scaleOrdinal(d3.schemeCategory20);
     this.simulation = d3.forceSimulation()
       .force("link", d3.forceLink().id((d)=> { return d['id']; }))
-      .force("charge", d3.forceManyBody());
+      .force("charge", d3.forceManyBody())
+      .force("center", d3.forceCenter(this.width / 2, this.height / 2));
+
+
 
     this.render(this.data);
   }
