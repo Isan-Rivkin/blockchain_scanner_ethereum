@@ -16,8 +16,12 @@ import * as d3 from './D3config';
     <div>
       <h2>{{name}}</h2>
     </div>
-    <input id="str" [(ngModel)]="root"/>
-    <button (click)="SendAddButton()">Send</button>
+    
+      <div class="address-group">
+        <label for="str">Address:</label>
+        <input id = "str" [(ngModel)]="root" class="form-control">
+      </div>
+      <button (click)="SendAddButton()" class="btn btn-default">Send</button>
     <svg [attr.width]="960" [attr.height]="600"></svg>
   `,
   providers: [ExplorerAgentService],
