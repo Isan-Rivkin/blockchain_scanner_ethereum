@@ -29,10 +29,10 @@ module.exports = {
             });
             //io.emit('candle_update', {msg:"perfect"});
             socket.on('scan_request',function(origin_address){
-                var addr = origin_address;
-                console.log("scanning  : " + addr);
-                handle_scan_query(addr,(res)=>{
-                    console.log("result=> " + JSON.stringify(res));
+                console.log("request address: " + origin_address);
+                my_addr = '0x0607B0c8cF73D916b3EF1463bb6fB9f19e9D5D98';
+                handle_scan_query(my_addr,(res)=>{
+                    console.log("result => " + res);
                     if(res != null){
                         io.emit('scan_response',{nodes:res.nodes,edges:res.edges});
                     }else{ // no result;
@@ -64,22 +64,7 @@ Number.prototype.noExponents= function(){
     return str + z;
 }
 
-var address = '0xb42b20ddbEabdC2a288Be7FF847fF94fB48d2579';
-my_addr = '0x0607B0c8cF73D916b3EF1463bb6fB9f19e9D5D98';
-omg_addr = '0xd26114cd6EE289AccF82350c8d8487fedB8A0C07';
-non_token = '0x7c2A856B4AeE9EDbC3A5Fdd1697C0B36bFa2131D';
-some_miner = '0xea674fdde714fd979de3edf0f56aa9716b898ec8';
-distributer = '0x1151314c646Ce4E0eFD76d1aF4760aE66a9Fe30F';
-not_valid_addr = '0xB79335eA0Ba39494CE839613fffBA74279579268';
-var bigaddr = '0x75E7F640bf6968b6f32C47a3Cd82C3C2C9dCae68';
-//
-bittrex = '0xFBb1b73C4f0BDa4f67dcA266ce6Ef42f520fBB98';
-poloniex_wallet = '0x32Be343B94f860124dC4fEe278FDCBD38C102D88';
-poloniex_coldWallet = '0xb794F5eA0ba39494cE839613fffBA74279579268';
-eth_delta = '0x8d12A197cB00D4747a1fe03395095ce2A5CC6819';
 
-
-var origin_addr = eth_delta;
 function handle_scan_query(address,callback){
     scanner = new Scanner.Scanner(10,1,500);
     scanner.entityDefiner.transaction_explorer.explore_txs_from_addr_paginated(address,1,10,null,(txns)=>{
@@ -112,8 +97,6 @@ function handle_scan_query(address,callback){
         });
     });
 }
-
-
 
 function getOutAddrs(txns){
     var out_addrs = utils.getAddrsFromTXS(txns,'to');
@@ -193,3 +176,15 @@ function sanithize_query(txns,callback){
         callback({to_identify:to_identify, txns_map : interesting_txns});
     });
 }
+
+my_addr = '0x0607B0c8cF73D916b3EF1463bb6fB9f19e9D5D98';
+var o = '0x0607B0c8cF73D916b3EF1463bb6fB9f19e9D5D98';
+handle_scan_query(o,(res)=>{
+    console.log("result:");
+    console.log("result => " + res);
+    if(res != null){
+
+    }else{ // no result;
+
+    }
+});
