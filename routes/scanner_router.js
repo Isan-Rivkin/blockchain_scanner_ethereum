@@ -79,7 +79,6 @@ poloniex_coldWallet = '0xb794F5eA0ba39494cE839613fffBA74279579268';
 eth_delta = '0x8d12A197cB00D4747a1fe03395095ce2A5CC6819';
 
 
-var origin_addr = eth_delta;
 function handle_scan_query(address,callback){
     scanner = new Scanner.Scanner(10,1,500);
     scanner.entityDefiner.transaction_explorer.explore_txs_from_addr_paginated(address,1,10,null,(txns)=>{
