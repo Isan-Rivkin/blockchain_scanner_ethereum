@@ -2,6 +2,7 @@ import { Injectable} from '@angular/core';
 //import {Http} from "@angular/http";
 import 'rxjs/add/operator/map'
 //import {test_data} from '../components/d3graph/test_data'
+import {url} from './config'
 
 import { Observable } from 'rxjs/Observable';
 import * as io from 'socket.io-client';
@@ -9,7 +10,7 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class ExplorerAgentService {
 
-   private url = 'http://localhost:3000';
+   private url = url;
     private socket;
 
 

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
- import { AgmCoreModule } from '@agm/core';
+ import { AgmCoreModule ,} from '@agm/core';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -14,10 +14,10 @@ import { MinerMapComponent } from './components/miner-map/miner-map.component';
 
 
 
-const appRoutes: Routes = [
-  { path: 'Explorer', component: D3graphComponent },
-  { path: '', component: AppComponent },
-];
+// const appRoutes: Routes = [
+//   { path: 'Explorer', component: D3graphComponent },
+//   { path: '', component: AppComponent },
+// ];
 
 @NgModule({
   declarations: [

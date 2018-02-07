@@ -1,17 +1,41 @@
 
-import { Component } from '@angular/core';
-import { MouseEvent } from '@agm/core';
+import { Component, OnInit } from '@angular/core';
+
+import { MinersPosService} from '../../services/miners-pos.service'
+import {pos} from './test _data'
 
 @Component({
   selector: 'app-miner-map',
   templateUrl: './miner-map.component.html',
-  styleUrls: ['./miner-map.component.css']
-})
-export class MinerMapComponent {
-  title:string;
+  styleUrls: ['./miner-map.component.css'],
+  providers: [MinersPosService]
 
-  constructor(){
+})
+export class MinerMapComponent  implements OnInit{
+
+  title:string;
+  markers;
+
+  ngOnInit(): void {
+    this.minersPosService.getMiner().subscribe(newdata => {
+      var to_display = [];
+      if(newdata['cords'].length < 100){
+
+      }else{
+        for(var i=0;i<newdata['cords'].length;i+=100){
+          to_display.push(newdata['cords'][i]);
+        }
+           this.markers =to_display;
+      }
+    });
+  }
+
+
+
+  constructor(private  minersPosService:MinersPosService){
     this.title = "Miners Map"
+    minersPosService.queryMiner();
+
   }
   // google maps zoom level
   zoom: number = 5;
@@ -24,44 +48,11 @@ export class MinerMapComponent {
     console.log(`clicked the marker: ${label || index}`)
   }
 
-  // mapClicked($event: MouseEvent) {
-  //   this.markers.push({
-  //     lat: $event.coords.lat,
-  //     lng: $event.coords.lng,
-  //     draggable: true
-  //   });
-  // }
 
-  // markerDragEnd(m: marker, $event: MouseEvent) {
-  //   console.log('dragEnd', m, $event);
-  // }
-
-  markers: marker[] = [
-    {
-      lat: 51.673858,
-      lng: 7.815982,
-      label: 'A'
-
-    },
-    {
-      lat: 51.373858,
-      lng: 7.215982,
-      label: 'B'
-
-    },
-    {
-      lat: 51.723858,
-      lng: 7.895982,
-      label: 'C'
-
-    }
-  ]
 }
 
 // just an interface for type safety.
 interface marker {
   lat: number;
   lng: number;
-  label?: string;
-
 }
