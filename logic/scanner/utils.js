@@ -96,6 +96,18 @@ class ExplorerUtils{
          }
          return outAddrs;
     }
+    sanithize_txns(txns){
+         var sanithized = [];
+         txns.forEach(tx=>{
+            if(this.valid_address(tx.from) && this.valid_address(tx.to)){
+                sanithized.push(tx);
+            }
+         });
+         return sanithized;
+    }
+    valid_address(addr){
+         return (addr.toString().length == 42);
+    }
 }
 
 /*exports */

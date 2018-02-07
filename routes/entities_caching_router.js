@@ -19,7 +19,7 @@ module.exports = {
                 scanner.is_valid_eth_account(entity.address,(valid)=>{
                     if(valid){
                         db.insert_entities(entity,(result)=>{
-                            // success
+                            socket.emit('add_entity',{status:'1', msg:'success'});
                         });
                     }else{
 

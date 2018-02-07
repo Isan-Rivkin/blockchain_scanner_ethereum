@@ -61,6 +61,20 @@ Number.prototype.noExponents= function(){
     return str + z;
 }
 
+var address = '0xb42b20ddbEabdC2a288Be7FF847fF94fB48d2579';
+my_addr = '0x0607B0c8cF73D916b3EF1463bb6fB9f19e9D5D98';
+omg_addr = '0xd26114cd6EE289AccF82350c8d8487fedB8A0C07';
+non_token = '0x7c2A856B4AeE9EDbC3A5Fdd1697C0B36bFa2131D';
+some_miner = '0xea674fdde714fd979de3edf0f56aa9716b898ec8';
+distributer = '0x1151314c646Ce4E0eFD76d1aF4760aE66a9Fe30F';
+not_valid_addr = '0xB79335eA0Ba39494CE839613fffBA74279579268';
+var bigaddr = '0x75E7F640bf6968b6f32C47a3Cd82C3C2C9dCae68';
+//
+bittrex = '0xFBb1b73C4f0BDa4f67dcA266ce6Ef42f520fBB98';
+poloniex_wallet = '0x32Be343B94f860124dC4fEe278FDCBD38C102D88';
+poloniex_coldWallet = '0xb794F5eA0ba39494cE839613fffBA74279579268';
+eth_delta = '0x8d12A197cB00D4747a1fe03395095ce2A5CC6819';
+
 
 var origin_addr = eth_delta;
 function handle_scan_query(address,callback){
@@ -79,8 +93,8 @@ function handle_scan_query(address,callback){
                             map.out[i].value =map.out[i].value.noExponents();
                             edges.push(map.out[i]);
                         }
-                       for(var i=0;i<map.in.length;++i){
-                           map.in[i].value =map.in[i].value.noExponents();
+                        for(var i=0;i<map.in.length;++i){
+                            map.in[i].value =map.in[i].value.noExponents();
                             edges.push(map.in[i]);
                         }
                         entities.forEach(e=>{
@@ -95,6 +109,10 @@ function handle_scan_query(address,callback){
         });
     });
 }
+handle_scan_query(origin_addr,(res)=>{
+    console.log(res);
+});
+
 
 function getOutAddrs(txns){
     var out_addrs = utils.getAddrsFromTXS(txns,'to');
@@ -148,29 +166,29 @@ function txPicker(origin,txns,callback){
 }
 
 function sanithize_query(txns,callback){
-        txPicker(origin_addr,txns,(picker_res)=>{
-            var to_identify = [];
-            to_identify.push(origin_addr);
-            if(picker_res == null || (picker_res.map.out.length ==0 &&picker_res.map.in.length ==0 ))
-            {
-                callback(null);
-                return null;
-            }
-            var interesting_txns = picker_res.map;
-            var origin = picker_res.address;
-            if(interesting_txns.out.length > 0){
-                var o = getOutAddrs(interesting_txns.out);
-                o.forEach(addr=>{
-                    to_identify.push(addr);
-                });
-            }
-            if(interesting_txns.in.length > 0){
-                var i = getInAddrs(interesting_txns.in);
-                i.forEach(addr=>{
-                    to_identify.push(addr);
-                });
-            }
-            to_identify = utils.get_unique_address(to_identify);
-            callback({to_identify:to_identify, txns_map : interesting_txns});
-        });
+    txPicker(origin_addr,txns,(picker_res)=>{
+        var to_identify = [];
+        to_identify.push(origin_addr);
+        if(picker_res == null || (picker_res.map.out.length ==0 &&picker_res.map.in.length ==0 ))
+        {
+            callback(null);
+            return null;
+        }
+        var interesting_txns = picker_res.map;
+        var origin = picker_res.address;
+        if(interesting_txns.out.length > 0){
+            var o = getOutAddrs(interesting_txns.out);
+            o.forEach(addr=>{
+                to_identify.push(addr);
+            });
+        }
+        if(interesting_txns.in.length > 0){
+            var i = getInAddrs(interesting_txns.in);
+            i.forEach(addr=>{
+                to_identify.push(addr);
+            });
+        }
+        to_identify = utils.get_unique_address(to_identify);
+        callback({to_identify:to_identify, txns_map : interesting_txns});
+    });
 }

@@ -110,12 +110,12 @@ class Types {
         return (this.types.indexOf(entity) > -1)
     }
 }
+function on_error(id,error){console.log("Error:",id,error)};
 class Explorer{
     constructor(url_builder,API_KEY){
         this.url_builder = url_builder;
         this.API_KEY = API_KEY;
     }
-    static on_error(id,error){console.log("Error:",id,error)};
 }
 
 
