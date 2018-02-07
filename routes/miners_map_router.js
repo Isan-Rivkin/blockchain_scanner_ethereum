@@ -37,7 +37,7 @@ module.exports = {
         io.on('connection',function(socket){
             socket.on('get_miners',function(){
                 getMiners(minersList=>{
-                    socket.emit('post_miners',minersList);
+                    socket.emit('post_miners',{cords:minersList});
                 });
             });
         });
