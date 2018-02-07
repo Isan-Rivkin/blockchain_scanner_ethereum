@@ -10,7 +10,9 @@ var client = new Twitter({
 
 module.exports.tweet = function(message,callback){
     client.post('statuses/update', {status: message.toString()},  function(error, tweet, response) {
-        if(error) throw error;
+        if(error){
+            callback(null,null);
+        }
         if(callback != null)
             callback(tweet,response);
         // console.log(tweet);  // Tweet body.
