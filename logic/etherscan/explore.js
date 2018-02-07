@@ -490,7 +490,7 @@ class EntityDefiner{
     }
     async is_valid_address(addr,callback){
         this.account_explorer.explore_acc_balance_from_addr(addr,(balance)=>{
-            if(balance == null)
+            if(balance == null || addr.length != 42)
                 callback({address:addr, is_valid_address : false});
             else if(balance.ether != 0){
                 callback({address:addr, is_valid_address : true});

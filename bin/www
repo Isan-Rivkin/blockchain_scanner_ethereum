@@ -93,7 +93,9 @@ function onListening() {
 
 // all modules that require IO object
 var scanner_module = require('../routes/scanner_router');
+var entitites_caching_router = require('../routes/entities_caching_router');
 scanner_module.setIO(io);
+entitites_caching_router.setIO(io);
 
 //socket.io
 // http = require('http').Server(app);
