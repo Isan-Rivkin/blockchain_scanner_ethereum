@@ -37,6 +37,11 @@ class Scanner{
         this.CURRENT_DEPTH = 0;
         this.MAX_DEPTH =MAX_DEPTH;
     }
+    async is_valid_eth_account(address,callback){
+        this.entityDefiner.is_valid_address(address,(result)=>{
+            callback(result.is_valid_address);
+        });
+    }
     async one_account_scan(params,propagate){
         this.entityDefiner.identify(params.address,(entity)=>{
             if(entity.type != null){ // is entity

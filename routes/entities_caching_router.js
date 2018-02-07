@@ -6,7 +6,7 @@ var ExplorerUtils = require("../logic/scanner/utils");
 var utils = new ExplorerUtils.ExplorerUtils();
 var io = null;
 var scanner = new Scanner.Scanner(10,1,500);
-
+var db = require('../logic/data/mongo_api');
 
 module.exports = router;
 module.exports = {
@@ -16,6 +16,15 @@ module.exports = {
         io.on('connection',function(socket){
             socket.on('add_entity', function(entity){
                 // add entity to db
+                scanner.is_valid_eth_account(entity.address,(valid)=>{
+                    if(valid){
+                        db.insert_entities(entity,(result)=>{
+                            // success
+                        });
+                    }else{
+
+                    }
+                })
             });
             socket.on('list_entity',function(){
                 // get all entitites
