@@ -7,45 +7,6 @@ var utils = new ExplorerUtils.ExplorerUtils();
 var io = null;
 var scanner = new Scanner.Scanner(10,1,500);
 
-/* Scanner. */
-router.get('/', function(req, res, next) {
-    my_addr = '0x0607B0c8cF73D916b3EF1463bb6fB9f19e9D5D98';
-    var address = my_addr;
-    var direction = "to";
-    scanner.one_level_graph({address:address,tx_direction:direction},(nodes,edges)=>{
-        res.json({nodes:nodes,edges:edges});
-    });
-});
-
-module.exports = router;
-module.exports = {
-    router:router,
-    setIO: function(iop){
-        io = iop;
-        io.on('connection',function(socket){
-            console.log('user connected');
-            socket.on('disconnect', function(){
-                console.log('user disconnected');
-            });
-            //io.emit('candle_update', {msg:"perfect"});
-            socket.on('scan_request',function(origin_address){
-                var addr = origin_address;
-                console.log("scanning  : " + addr);
-                handle_scan_query(addr,(res)=>{
-                    console.log("result=> " + JSON.stringify(res));
-                    if(res != null){
-                        io.emit('scan_response',{nodes:res.nodes,edges:res.edges});
-                    }else{ // no result;
-                        io.emit('scan_response',{nodes:null,edges:null});
-                    }
-                });
-            });
-        });
-    }
-}
-
-
-
 Number.prototype.noExponents= function(){
     var data= String(this).split(/[eE]/);
     if(data.length== 1) return data[0];
@@ -64,6 +25,22 @@ Number.prototype.noExponents= function(){
     return str + z;
 }
 
+/* Scanner. */
+router.get('/', function(req, res, next) {
+    my_addr = '0x0607B0c8cF73D916b3EF1463bb6fB9f19e9D5D98';
+    var address = my_addr;
+    var direction = "to";
+    scanner.one_level_graph({address:address,tx_direction:direction},(nodes,edges)=>{
+        res.json({nodes:nodes,edges:edges});
+    });
+});
+
+
+
+
+
+
+
 var address = '0xb42b20ddbEabdC2a288Be7FF847fF94fB48d2579';
 my_addr = '0x0607B0c8cF73D916b3EF1463bb6fB9f19e9D5D98';
 omg_addr = '0xd26114cd6EE289AccF82350c8d8487fedB8A0C07';
@@ -77,6 +54,7 @@ bittrex = '0xFBb1b73C4f0BDa4f67dcA266ce6Ef42f520fBB98';
 poloniex_wallet = '0x32Be343B94f860124dC4fEe278FDCBD38C102D88';
 poloniex_coldWallet = '0xb794F5eA0ba39494cE839613fffBA74279579268';
 eth_delta = '0x8d12A197cB00D4747a1fe03395095ce2A5CC6819';
+
 
 
 function handle_scan_query(address,callback){
@@ -111,6 +89,7 @@ function handle_scan_query(address,callback){
         });
     });
 }
+var origin_addr = '0x0607B0c8cF73D916b3EF1463bb6fB9f19e9D5D98';
 
 
 
@@ -191,4 +170,31 @@ function sanithize_query(txns,callback){
         to_identify = utils.get_unique_address(to_identify);
         callback({to_identify:to_identify, txns_map : interesting_txns});
     });
+}
+
+
+
+module.exports = {
+    router:router,
+    setIO: function(iop){
+        io = iop;
+        io.on('connection',function(socket){
+            console.log('user connected');
+            socket.on('disconnect', function(){
+                console.log('user disconnected');
+            });
+            //io.emit('candle_update', {msg:"perfect"});
+            socket.on('scan_request',function(origin_address){
+                console.log("querying " + origin_address);
+                handle_scan_query(origin_address,(res)=>{
+                    if(res != null){
+                        console.log("RESULT => " + JSON.stringify(res));
+                        io.emit('scan_response',{nodes:res.nodes,edges:res.edges});
+                    }else{ // no result;
+                        io.emit('scan_response',{nodes:null,edges:null});
+                    }
+                });
+            });
+        });
+    }
 }
