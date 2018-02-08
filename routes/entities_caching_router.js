@@ -37,7 +37,7 @@ module.exports = {
             });
             socket.on('list_entity',function(){
                 db.list_entity(entities=>{
-                    socket.email('list_entity_post',entities);
+                    socket.emit('list_entity_post',entities);
                 });
             });
             socket.on('edit_entity',function(entity){

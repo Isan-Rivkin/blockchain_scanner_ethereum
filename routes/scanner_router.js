@@ -6,6 +6,7 @@ var ExplorerUtils = require("../logic/scanner/utils");
 var utils = new ExplorerUtils.ExplorerUtils();
 var io = null;
 var scanner = new Scanner.Scanner(10,1,500);
+var constants = require('../logic/constants');
 
 Number.prototype.noExponents= function(){
     var data= String(this).split(/[eE]/);
@@ -171,9 +172,86 @@ function sanithize_query(txns,callback){
         callback({to_identify:to_identify, txns_map : interesting_txns});
     });
 }
+var entities_map={
+    'user' :1,
+    'distribuer':2,
+    "erc20":3 ,
+    "contract_non_erc":4,
+    'miner':5,
+    'exchange':6,
+    'uUser':7
+};
 
+function buildView(entities,edges,callback){
+    var nodes = [];
+    var links= [];
+    entities.forEach(e=>{
+        var n = entityToNode(e);
+        nodes.push(n);
+    });
+    edges.forEach(edge=>{
+        var o  = getNodeIndex(edge.from,nodes);
+        nodes = o.nodes;
+        var source = o.index;
+        o = getNodeIndex(edge.to,nodes);
+        nodes = o.nodes;
+        var target = o.index;
+        var value =normalValue(edge.value);
+        links.push({source:source,target:target,value:value});
+    });
+    var final_links = unique(links)
+    callback({nodes:nodes,edges:final_links});
+}
 
-
+function unique(array){
+    var unique = [];
+    for(var i=0;i<array.length;++i){
+        if(unique.length ==0){
+            unique.push(array[i]);
+        }else{
+            var exist  = false;
+            for(var j=0;j<unique.length;j++){
+                if(equalLinks(unique[j],array[i]))
+                    exist = true;
+            }
+            if(!exist)
+                unique.push(array[i]);
+        }
+    }
+    return unique;
+}
+// handle_scan_query(bittrex,(res)=>{
+//     buildView(res.nodes,res.edges,(res)=>{
+//         var links = res.edges;
+//         var nodes = res.nodes;
+//         console.log(nodes);
+//         console.log(links);
+//     })
+// });
+function normalValue(value){
+    if(value < 1){
+        return 1;
+    }else if(value>500){
+        return 500;
+    }else{
+        return value;
+    }
+}
+function equalLinks(l1,l2){
+    return l1.source == l2.source && l1.target == l2.target;
+}
+function entityToNode(entity){
+    return {name:entity.address.toLowerCase(),group:entities_map[entity.type]};
+}
+function getNodeIndex(address,nodes){
+    for(var i=0;i<nodes.length;i++){
+        if(nodes[i].name == address){
+            return ({index:i,nodes :nodes});
+        }
+    }
+    nodes.push({name: address , group: entities_map['uUser']});
+    return ({index:nodes.length-1, nodes : nodes});
+}
 module.exports = {
     router:router,
     setIO: function(iop){
@@ -188,15 +266,20 @@ module.exports = {
                 console.log("querying " + origin_address);
                 if(origin_address.length != 42){
                     socket.emit('scan_response',{nodes:null,edges:null});
-                }
-                handle_scan_query(origin_address,(res)=>{
-                    if(res != null){
-                        console.log("RESULT => " + JSON.stringify(res));
-                        socket.emit('scan_response',{nodes:res.nodes,edges:res.edges});
-                    }else{ // no result;
+                }else{
+                handle_scan_query(bittrex,(res)=>{
+                    if(res ==null){
                         socket.emit('scan_response',{nodes:null,edges:null});
+                    }else{
+                        buildView(res.nodes,res.edges,(the_res)=>{
+                            var links = the_res.edges;
+                            var nodes = the_res.nodes;
+                            console.log("RESULT => " + JSON.stringify(the_res));
+                            socket.emit('scan_response',{nodes:nodes,edges:links});
+                        });
                     }
-                });
+                    });
+                }
             });
         });
     }
