@@ -344,7 +344,6 @@ export class D3graphComponent implements OnInit, OnDestroy {
       }
     };
 
-    this.render(graph);
   }
 
 }

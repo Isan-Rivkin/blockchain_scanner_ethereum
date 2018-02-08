@@ -10,9 +10,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { UsersComponent } from './components/users/users.component';
 import { D3graphComponent } from './components/d3graph/d3graph.component';
 import { MinerMapComponent } from './components/miner-map/miner-map.component';
-import {EntitiesComponent} from'./components/entities/entities.component'
-
-
+import {EntitiesComponent} from'./components/entities/entities.component';
+import {HomeComponent} from'./components/home/home.component';
+import {HttpClientModule} from "@angular/common/http";
 
 
 // const appRoutes: Routes = [
@@ -28,12 +28,12 @@ import {EntitiesComponent} from'./components/entities/entities.component'
     D3graphComponent,
     MinerMapComponent,
     EntitiesComponent,
-
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     AgmCoreModule.forRoot({
       // please get your own API key here:
       // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en

@@ -267,7 +267,7 @@ module.exports = {
                 if(origin_address.length != 42){
                     socket.emit('scan_response',{nodes:null,edges:null});
                 }else{
-                handle_scan_query(bittrex,(res)=>{
+                handle_scan_query(origin_address,(res)=>{
                     if(res ==null){
                         socket.emit('scan_response',{nodes:null,edges:null});
                     }else{
@@ -284,3 +284,4 @@ module.exports = {
         });
     }
 }
+
