@@ -1,7 +1,8 @@
 import { Injectable} from '@angular/core';
 //import {Http} from "@angular/http";
 import 'rxjs/add/operator/map'
-//import {test_data} from '../components/d3graph/test_data'
+import {temp_data2} from '../components/d3force-graph/test_data2'
+
 import {url} from './config'
 
 import { Observable } from 'rxjs/Observable';
@@ -36,6 +37,9 @@ export class ExplorerAgentService {
       };
     });
     return observable;
+  }
+  getTestTransactions(){
+    return temp_data2;
   }
 
   //http

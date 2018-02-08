@@ -3,7 +3,7 @@
 import {Component, NgModule, OnInit, AfterViewInit, OnDestroy, ViewEncapsulation,} from '@angular/core'
 import {ExplorerAgentService} from '../../services/explorer-agent.service'
 //import {test_data} from './test_data'
-import {test_data2} from './test_data_2'
+import {test_data_3} from './test_data_3'
 import * as d3 from './D3config';
 
 
@@ -58,10 +58,12 @@ export class D3graphComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // console.log("on init "+ typeof (test_data2));
     // this.updateData(test_data2);
-    this.connection = this.explorerAgentService.getTransactions().subscribe(newdata => {
-      console.log("new data: "+ typeof (newdata));
-      this.updateData(newdata);
-    })
+    // this.connection = this.explorerAgentService.getTransactions().subscribe(newdata => {
+    //   console.log("new data: "+ typeof (newdata));
+    //   this.updateData(newdata);
+    // })
+
+    this.simpleGraph(test_data_3)
   }
 
   ngOnDestroy() {
@@ -225,6 +227,8 @@ export class D3graphComponent implements OnInit, OnDestroy {
       this.explorerAgentService.sendAddress(addres);
     }
 
+
+
   }
 
   draw(){
@@ -344,6 +348,10 @@ export class D3graphComponent implements OnInit, OnDestroy {
       }
     };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> stashing
   }
 
 }

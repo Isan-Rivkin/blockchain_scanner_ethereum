@@ -10,9 +10,15 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { UsersComponent } from './components/users/users.component';
 import { D3graphComponent } from './components/d3graph/d3graph.component';
 import { MinerMapComponent } from './components/miner-map/miner-map.component';
+<<<<<<< HEAD
 import {EntitiesComponent} from'./components/entities/entities.component';
 import {HomeComponent} from'./components/home/home.component';
 import {HttpClientModule} from "@angular/common/http";
+=======
+import {EntitiesComponent} from'./components/entities/entities.component'
+import {D3forceGraphComponent} from './components/d3force-graph/d3force-graph.component'
+
+>>>>>>> stashing
 
 
 // const appRoutes: Routes = [
@@ -28,7 +34,12 @@ import {HttpClientModule} from "@angular/common/http";
     D3graphComponent,
     MinerMapComponent,
     EntitiesComponent,
+<<<<<<< HEAD
     HomeComponent,
+=======
+    D3forceGraphComponent,
+
+>>>>>>> stashing
   ],
   imports: [
     BrowserModule,
