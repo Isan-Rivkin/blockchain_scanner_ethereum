@@ -285,3 +285,6 @@ module.exports = {
     }
 }
 
+// handle_scan_query(bittrex,(res)=>{
+//     console.log(res);
+// });
