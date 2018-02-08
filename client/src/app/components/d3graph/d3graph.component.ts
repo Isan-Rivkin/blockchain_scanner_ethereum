@@ -197,9 +197,9 @@ export class D3graphComponent implements OnInit, OnDestroy {
 
   private updateData(newData){
     // mine #2
-    this.data.edges=newData.edges;
+    /*this.data.edges=newData.edges;
     this.data.nodes=newData.nodes;
-    console.log(newData);
+    console.log(newData);*/
     // mine
     // var the_graph = this.toGraph(newData);
     // this.data =  the_graph;
@@ -207,8 +207,8 @@ export class D3graphComponent implements OnInit, OnDestroy {
     // this.data.edges = this.data.edges.concat(the_graph.edges);
     // this.draw_graph(the_graph);
     //tomer
-   // this.attachID(newData);
-   //  this.setIDLinks(newData);
+   this.attachID(newData);
+    this.setIDLinks(newData);
    //
    //  console.log(this.data);
     this.draw();
@@ -322,5 +322,29 @@ export class D3graphComponent implements OnInit, OnDestroy {
     d.fy = d.y;
   }
 
+  private simpleGraph(graph){
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+    var options = {
+      chart: {
+        type: 'forceDirectedGraph',
+        height: 450,
+        width: (function(){ '1000px' })(),
+        margin:{top: 20, right: 20, bottom: 20, left: 20},
+        color: function(d){
+          return color(d.group)
+        },
+        nodeExtras: function(node) {
+          node && node
+            .append("text")
+            .attr("dx", 8)
+            .attr("dy", ".35em")
+            .text(function(d) { return d.name })
+            .style('font-size', '10px');
+        }
+      }
+    };
+
+    this.render(graph);
+  }
 
 }
