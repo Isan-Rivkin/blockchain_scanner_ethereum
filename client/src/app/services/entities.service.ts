@@ -24,42 +24,63 @@ export class EntitiesService {
 
   constructor(){
     this.socket = io(this.url);
+    this.socket.emit('list_entity');
   }
 
   getEntitiesFromData() {
 
-    this.socket.emit('list_entity');
-    this.socket.on("list_entity_post",(list_entity)=>{
-      console.log(list_entity);
-      return list_entity;
-    })
+    //get list
+    let observable = new Observable(observer => {
+      this.socket.on('db_ack',(status)=>{
+        console.log(status.msg);
+      })
+      this.socket.on('search_entity_post',(list_entity) => {
+        observer.next(list_entity);
+      })
+      this.socket.on('group_by_entity_post',(list_entity) => {
+        observer.next(list_entity);
+      })
+      this.socket.on('list_entity_post', (list_entity) => {
+        observer.next(list_entity);
+      })
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
 
+  }
 
+  getGroupByEntity(query){
+    this.socket.emit('group_by_entity', query);
 
   }
 
   addEntity(entity: Entity) {
     this.socket.emit('add_entity', entity);
-    this.eItems.push(entity);
-    console.log(this.eItems);
+    //this.eItems.push(entity);
+    //console.log(this.eItems);
+    this.socket.emit('list_entity');
   }
 
   updateEntity(entity: Entity) {
-    this.socket.on()
-    let index = findIndex(this.eItems, (e: Entity) => {
-      return e.address === entity.address;
-    });
-    this.eItems[index] = entity;
+    this.socket.emit('edit_entity', entity);
+    this.socket.emit('list_entity');
+    // let index = findIndex(this.eItems, (e: Entity) => {
+    //   return e.address === entity.address;
+    // });
+    // this.eItems[index] = entity;
   }
 
   deleteEntity(entity: Entity) {
-    this.eItems.splice(this.eItems.indexOf(entity), 1);
-    console.log(this.eItems);
-  }
+    this.socket.emit('edit_entity', entity);
+    this.socket.emit('list_entity');
 
-  getSearchedEntity(entity, searchText){
-    console.log(JSON.stringify(entity)+" "+searchText);
-    return this.eItems;
+  }
+//TODO - add text to emit
+  getSearchedEntity(entity){
+    this.socket.emit('search_entity', entity);
+    this.socket.emit('list_entity');
   }
 
 }

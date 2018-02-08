@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { UsersComponent } from './components/users/users.component';
 import { D3graphComponent } from './components/d3graph/d3graph.component';
 import { MinerMapComponent } from './components/miner-map/miner-map.component';
+import {EntitiesComponent} from'./components/entities/entities.component'
 
 
 
@@ -26,6 +27,7 @@ import { MinerMapComponent } from './components/miner-map/miner-map.component';
     UsersComponent,
     D3graphComponent,
     MinerMapComponent,
+    EntitiesComponent,
 
   ],
   imports: [
