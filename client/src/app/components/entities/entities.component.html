@@ -4,12 +4,22 @@
 
     <form class="navbar-form navbar-left">
       <div class="form-group">
-      <p>Good: <input type="checkbox"
-                      name="good" value="ON"
-                      [(ngModel)]="searchEntity.good" /></p>
+        <!--<label class="container"> No Good Filter: <input type="radio" checked="checked" name="good"-->
+                                               <!--[(ngModel)]="searchEntity.good" ></label>-->
+        <!--<label class="container"> Good: <input type="radio"  name="good"-->
+                      <!--[(ngModel)]="searchEntity.good" ></label>-->
+
+        <label class="container"> Bad: <input type="radio"  name="bad"
+                                              [(ngModel)]="!searchEntity.good"  >
+          <span class="checkmark"></span></label>
+        <label class="container"> Good: <input type="radio"  name="good"
+                                              [(ngModel)]="!searchEntity.good"  ><span class="checkmark"></span></label>
+
+
       <p>Interesting: <input type="text"
                       name="interesting"
-                      [(ngModel)]="searchEntity.interesting" /></p>
+                      [(ngModel)]="searchEntity.interesting" />
+                      <span class="checkmark"></span></p>
         <p> <input type="text" placeholder="Enter public key / Type"
                    name="searchText" class="form-control"
                                [(ngModel)]="searchText" /></p>

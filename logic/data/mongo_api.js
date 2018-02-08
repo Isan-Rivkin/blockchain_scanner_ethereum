@@ -93,7 +93,11 @@ var queryDocument = function(db,client,query, callback) {
     // Get the documents collection
     const collection = db.collection(entities_collection);
     // Find some documents
-    collection.find(query).toArray(function(err, docs){
+    var comment =query.comment;
+    var good = query.type.good;
+    var interesting = query.type.interesting;
+    var q = buildQuery(comment,good,interesting);
+    collection.find(q).toArray(function(err, docs){
         client.close();
         callback(docs);
     });
@@ -104,6 +108,26 @@ module.exports.query_entities = function(query,callback){
         queryDocument(db,client,query,callback);
     });
 };
+
+function buildQuery(comment,good,interesting){
+    console.log("params : " );
+    console.log("com : |" + comment + "|");
+    console.log("good: " + good);
+    console.log(" interesting : " + interesting);
+    if(comment == undefined)
+        comment = '';
+    var theQuery ={'comment': {$regex : comment,$options: 'i'}};
+    if(good != undefined && interesting >=1 && interesting <=3){
+        theQuery ={'comment': {$regex : comment,$options: 'i'},'good':good, 'interesting': interesting};
+    }
+    if(good != undefined && !(interesting>=1&&interesting <=3)){
+        theQuery ={'comment': {$regex : comment,$options: 'i'},'good':good};
+    }
+    if(interesting >=1 && interesting <=3 && good ==undefined){
+        theQuery = {'comment': {$regex : comment,$options: 'i'},'interesting':interesting};
+    }
+    return theQuery;
+}
 
 /* GROUP BY OPERATION */
 

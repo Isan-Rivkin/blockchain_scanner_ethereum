@@ -73,14 +73,13 @@ export class EntitiesService {
   }
 
   deleteEntity(entity: Entity) {
-    this.socket.emit('edit_entity', entity);
+    this.socket.emit('delete_entity', entity);
     this.socket.emit('list_entity');
 
   }
-//TODO - add text to emit
+
   getSearchedEntity(entity){
     this.socket.emit('search_entity', entity);
-    this.socket.emit('list_entity');
   }
 
 }

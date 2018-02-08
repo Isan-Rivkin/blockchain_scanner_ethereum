@@ -24,7 +24,7 @@ export class EntitiesComponent implements OnInit {
   filterName :string;
   groupByNum;
 
-  constructor(private entitiesService: EntitiesService) { this.filterName= "Filter By"; this.groupByNum=1 }
+  constructor(private entitiesService: EntitiesService) { this.filterName= "Filter By"; this.groupByNum=null; }
 
   ngOnInit() {
     this.getEntities();
@@ -78,6 +78,9 @@ export class EntitiesComponent implements OnInit {
   saveEntity(entity) {
     if(this.isNewForm) {
       // add a new entity
+      if(entity.good==null){
+        entity.good=false;
+      }
       this.entitiesService.addEntity(entity);
     }
     this.entityForm = false;
@@ -88,6 +91,9 @@ export class EntitiesComponent implements OnInit {
   }
 
   updateEntity() {
+    if(this.editedEntity.good==null){
+      this.editedEntity.good=false;
+    }
     this.entitiesService.updateEntity(this.editedEntity);
     this.editEntityForm = false;
     this.editedEntity = {};

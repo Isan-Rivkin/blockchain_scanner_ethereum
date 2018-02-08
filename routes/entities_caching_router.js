@@ -23,11 +23,17 @@ module.exports = {
         io = iop;
         io.on('connection',function(socket){
             socket.on('add_entity', function(entity){
+                console.log("##########");
+                console.log(entity);
+                console.log("##########");
                 // add entity to db
                 scanner.is_valid_eth_account(entity.address,(valid)=>{
                     if(valid){
-                        db.insert_entities(entity,(result)=>{
+                        db.insert_entities([entity],(result)=>{
                             socket.emit('add_entity',{status:1, msg:'success'});
+                            db.list_entity(entities=>{
+                                socket.emit('list_entity_post',entities);
+                            });
                             twitter.tweet(constructTweet(entity),(tweet,response)=>{console.log('posted tweet')});
                         });
                     }else{
@@ -44,15 +50,26 @@ module.exports = {
                 // edit entity
                 db.update_entity(entity,(result)=>{
                     socket.emit('db_ack',{status:1, msg:'updated entity'});
+                    db.list_entity(entities=>{
+                        socket.emit('list_entity_post',entities);
+                    });
                 });
             });
             socket.on('delete_entity',function(entity){
                 db.remove_entity(entity,(result)=>{
                     socket.emit('db_ack',{status:1, msg:'removed entity'});
+                    db.list_entity(entities=>{
+                        socket.emit('list_entity_post',entities);
+                    });
                 })
             });
             socket.on('search_entity',function(query){
-                db.query_entities(query,(entities)=>{
+                //{params:this.searchEntity,text: this.searchText}
+
+                db.query_entities({
+                    type:query.params,
+                    comment : query.text
+                },(entities)=>{
                     socket.emit('search_entity_post',entities);
                 });
             });
