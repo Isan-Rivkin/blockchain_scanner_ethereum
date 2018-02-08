@@ -119,5 +119,3 @@ miners_router.setIO(io);
 //         io.emit('transactions', jsonContent);
 //     });
 // });
-
-setInterval(addNMiners,5000);
