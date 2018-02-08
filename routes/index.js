@@ -16,6 +16,4 @@ router.get('/cookie', function(req, res, next) {
         }
         console.log(req.cookies)
 });
-
-
 module.exports = router;
