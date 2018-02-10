@@ -10,8 +10,8 @@ export var temp_data2= {
 
   ],
   "links": [
-    {"source": "1", "target": "11", "value": 1},
-    {"source": "2", "target": "12", "value": 8},
+    {"source": "8", "target": "9", "value": 1},
+    {"source": "9", "target": "10", "value": 8},
     {"source": "3", "target": "13", "value": 10},
     {"source": "4", "target": "14", "value": 6},
     {"source": "6", "target": "8", "value": 1},
