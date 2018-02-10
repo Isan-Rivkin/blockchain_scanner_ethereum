@@ -17,6 +17,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {D3forceGraphComponent} from './components/d3force-graph/d3force-graph.component'
 import {CanvasLogoComponent} from './components/canvas-logo/canvas-logo.component'
 import {FooterComponent} from './components/footer/footer.component'
+import {EtherAboutComponent} from './components/ether-about/ether-about.component'
 
 import {routerConfig} from './components/navbar/top-menu.config'
 
@@ -40,6 +41,7 @@ import {routerConfig} from './components/navbar/top-menu.config'
     D3forceGraphComponent,
     CanvasLogoComponent,
     FooterComponent,
+    EtherAboutComponent,
 
 
 

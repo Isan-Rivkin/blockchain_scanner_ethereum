@@ -2,6 +2,7 @@ import {D3forceGraphComponent} from "../d3force-graph/d3force-graph.component";
 import {HomeComponent} from "../home/home.component";
 import {Routes} from "@angular/router";
 import {MinerMapComponent} from "../miner-map/miner-map.component";
+import {EtherAboutComponent} from "../ether-about/ether-about.component";
 
 /**
  * Created by Tomer on 10/02/2018.
@@ -24,10 +25,15 @@ export const routerConfig: Routes = [
     component: MinerMapComponent
   },
   {
+    path: 'ether_about',
+    component: EtherAboutComponent
+  },
+  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full'
   },
+
   {
     path: '**',
     redirectTo: '/home',

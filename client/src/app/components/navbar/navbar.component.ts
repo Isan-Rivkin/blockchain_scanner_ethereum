@@ -31,10 +31,10 @@ export class NavbarComponent implements OnInit {
   goExplorer() {
     this.router.navigate(['explorer']);
   }
-  //TODO
-  // goAbout() {
-  //   this.router.navigate(routerConfig);
-  // }
+
+  goEtherAbout() {
+    this.router.navigate(['ether_about']);
+  }
   ngOnInit() {
   }
 

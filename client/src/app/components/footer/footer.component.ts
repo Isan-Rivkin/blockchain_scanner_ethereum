@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  footer_msg = '@ Isan Rivkin & Tomer Saporta';
+  footer_msg = '© Isan Rivkin & Tomer Saporta';
 
   constructor() { }
 
