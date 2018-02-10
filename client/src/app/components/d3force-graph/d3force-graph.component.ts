@@ -16,7 +16,7 @@ import { IData } from './d3_data_interface';
       <h2>Hello {{name}}</h2>
     </div>
     <div class = "graph">
-    <svg width="960" height="600"></svg>
+    <svg width="1100" height="400"></svg>
     </div>
   `,
   providers:[ExplorerAgentService]
@@ -148,7 +148,7 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
 
   private draw(data){
 
-    d3.select('.graph').append('svg').attr("width", 960).attr("height", 600);
+    d3.select('.graph').append('svg').attr("width", 1100).attr("height", 400);
 
     this.svg = d3.select("svg");
     var width = +this.svg.attr("width");
@@ -168,7 +168,7 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
 
 
   private ticked() {
-    console.log("tricked");
+
       this.link
         .attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })

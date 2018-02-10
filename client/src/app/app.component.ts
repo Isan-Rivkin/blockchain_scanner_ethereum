@@ -9,6 +9,5 @@ import {HomeService} from "./services/home.service";
   providers: [HomeService],
 })
 export class AppComponent {
-  title = 'app works!';
 
 }

@@ -15,8 +15,10 @@ import {HomeComponent} from'./components/home/home.component';
 import {HttpClientModule} from "@angular/common/http";
 
 import {D3forceGraphComponent} from './components/d3force-graph/d3force-graph.component'
+import {CanvasLogoComponent} from './components/canvas-logo/canvas-logo.component'
+import {FooterComponent} from './components/footer/footer.component'
 
-
+import {routerConfig} from './components/navbar/top-menu.config'
 
 
 // const appRoutes: Routes = [
@@ -36,6 +38,9 @@ import {D3forceGraphComponent} from './components/d3force-graph/d3force-graph.co
     HomeComponent,
 
     D3forceGraphComponent,
+    CanvasLogoComponent,
+    FooterComponent,
+
 
 
   ],
@@ -47,9 +52,11 @@ import {D3forceGraphComponent} from './components/d3force-graph/d3force-graph.co
       // please get your own API key here:
       // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
       apiKey: 'AIzaSyAG4nbsb-WGDISnQRgUqOShJbvzYgWzz_o'
-    })
+    }),
+    RouterModule.forRoot(routerConfig, {useHash:true})
 
   ],
+
   providers: [],
   bootstrap: [AppComponent]
 })
