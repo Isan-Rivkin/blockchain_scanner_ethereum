@@ -23,9 +23,12 @@ export const routerConfig: Routes = [
   {
     path: 'map',
     component: MinerMapComponent
+  }, {
+    path: 'ether_about',
+    component: EtherAboutComponent
   },
   {
-    path: 'ether_about',
+    path: 'ether_about/:id',
     component: EtherAboutComponent
   },
   {

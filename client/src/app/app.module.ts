@@ -18,7 +18,6 @@ import {D3forceGraphComponent} from './components/d3force-graph/d3force-graph.co
 import {CanvasLogoComponent} from './components/canvas-logo/canvas-logo.component'
 import {FooterComponent} from './components/footer/footer.component'
 import {EtherAboutComponent} from './components/ether-about/ether-about.component'
-
 import {routerConfig} from './components/navbar/top-menu.config'
 
 
@@ -43,8 +42,6 @@ import {routerConfig} from './components/navbar/top-menu.config'
     FooterComponent,
     EtherAboutComponent,
 
-
-
   ],
   imports: [
     BrowserModule,
@@ -55,7 +52,9 @@ import {routerConfig} from './components/navbar/top-menu.config'
       // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
       apiKey: 'AIzaSyAG4nbsb-WGDISnQRgUqOShJbvzYgWzz_o'
     }),
-    RouterModule.forRoot(routerConfig, {useHash:true})
+    RouterModule.forRoot(routerConfig, {useHash:true}),
+
+
 
   ],
 
