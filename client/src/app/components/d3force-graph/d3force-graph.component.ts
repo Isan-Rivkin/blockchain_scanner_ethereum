@@ -6,6 +6,7 @@ import * as d3 from './D3config'
 import {ExplorerAgentService} from '../../services/explorer-agent.service'
 
 import { IData } from './d3_data_interface';
+import {test_data} from "../d3graph/test_data";
 
 @Component({
   selector: 'app-d3-force-graph',
@@ -14,9 +15,15 @@ import { IData } from './d3_data_interface';
   template: `
     <div>
       <h2>Hello {{name}}</h2>
-    </div>
+           <div class="address-group">
+               <label for="str">Address:</label>
+               <input id = "str" [(ngModel)]="root"  placeholder="Enter public key" class="form-control">
+               <button (click)="SendAddButton()" class="btn btn-default">Send</button>
+               <!--<button (click)="onClearState()" class="btn btn-default">Clear</button>-->
+             </div>
     <div class = "graph">
     <svg width="1100" height="400"></svg>
+    </div>
     </div>
   `,
   providers:[ExplorerAgentService]
@@ -25,7 +32,7 @@ import { IData } from './d3_data_interface';
 export class D3forceGraphComponent implements OnInit, OnDestroy{
 
   @ViewChild("containerD3forceGraph") element: ElementRef;
-
+  root:string;
   name:string;
   svg;
   color;
@@ -37,6 +44,7 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
     links: []
   };
   drawData;
+  searchArr = [];
 
 
   constructor(private explorerAgentService:ExplorerAgentService) {
@@ -52,22 +60,51 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
     // this.drawData = this.addrData;
     //this.draw(this.drawData);
 
-    this.explorerAgentService.$data.subscribe(data => {
+    // this.explorerAgentService.$data.subscribe(data => {
+    //
+    //     this.drawData = data;
+    //
+    //   });
 
-        this.drawData = data;
+  }
+  private onClearState(){
+    this.searchArr = [];
+    this.explorerAgentService.clearData();
+  }
 
-      });
+  private SendAddButton(){
 
-
+    if (this.root != null) {
+      //
+      // this.addrData = {
+      //   nodes: [],
+      //   links: []
+      // };
+      this.sendAddres(this.root);
+    }
   }
 
 
   ngAfterViewInit(){
-    //var newData = this.explorerAgentService.getTestTransactions();
+
+    this.explorerAgentService.getTransactions().subscribe(newData=>{
+      console.log("new Data: "+ JSON.stringify(newData));
+      //////////////////////temp
+      this.explorerAgentService.addDAddrData(temp_data);
+      //////////////////////////
+      //TODO
+      //this.explorerAgentService.addDAddrData(newData);
+
+
+    });
     this.explorerAgentService.$data.subscribe(data => {
       this.clearState();
       this.drawData = data;
+      console.log("data before draw : "+ JSON.stringify(data));
+      if(data.links.length!=0){
       this.draw(data);
+      }
+      else{alert ("Start");}
     });
 
   }
@@ -87,13 +124,12 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
   private sendAddres(addres){
 
   alert(addres);
-  // if(this.searchArr.indexOf(addres.toLowerCase())<0) {
-  //   this.searchArr.push(addres.toLowerCase());
-  //   this.explorerAgentService.sendAddress(addres);
-  // }
+  if(this.searchArr.indexOf(addres.toLowerCase())<0) {
+    this.searchArr.push(addres.toLowerCase());
+    this.explorerAgentService.sendAddress(addres);
+  }
+  else {alert("Exist!");}
 
-    this.clearState();
-  this.explorerAgentService.addDAddrData(temp_data);
 }
 
   private clearState(){
@@ -116,6 +152,7 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
 
 
 
+    //treturn test data
     var newData = this.explorerAgentService.getTestTransactions();
     //console.log("new data: " + JSON.stringify(newData));
 
@@ -133,7 +170,8 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
     this.drawData = this.addrData;
     // this.drawData.node.shift();
     // this.drawData.links.shift();
-    this.draw(newData);
+    //this.draw(newData);
+
     //
     // var uptadedNodes =new Array (new Set(this.data.nodes.concat(newData.nodes)));
     // var uptadedLinks =new Array (new Set(this.data.links.concat(newData.links)));

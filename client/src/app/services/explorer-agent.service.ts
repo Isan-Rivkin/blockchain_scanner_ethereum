@@ -13,31 +13,14 @@ import * as io from 'socket.io-client';
 
 @Injectable()
 export class ExplorerAgentService {
+  count =0;
 
 
   private mockData: IData = {
     "nodes": [
-      {"id": "1", "group": 1, "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"},
-      {"id": "2", "group": 1, "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"},
-      {"id": "3", "group": 1, "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"}
-    ],
-    "links": [
-      {"source": "1", "target": "2", "value": 1},
-      {"source": "2", "target": "3", "value": 8},
-      {"source": "3", "target": "1", "value": 10}
-    ]
-  };
 
-  private addData: IData = {
-    "nodes": [
-      {"id": "4", "group": 3, "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"},
-      {"id": "5", "group": 3, "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"},
-      {"id": "6", "group": 5, "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"}
     ],
     "links": [
-      {"source": "1", "target": "4", "value": 1},
-      {"source": "4", "target": "5", "value": 8},
-      {"source": "5", "target": "6", "value": 10}
     ]
   };
 
@@ -48,20 +31,39 @@ export class ExplorerAgentService {
 
 
 
-  addDAddrData(newData: IData) {
-    for(var i = 0; i<newData.nodes.length; i++){
-      this.mockData.nodes.push(newData.nodes[i]);
-    }
-    for(var i = 0; i<newData.links.length; i++){
-      this.mockData.links.push(newData.links[i]);
-    }
-    console.log(JSON.stringify(this.mockData.nodes));
-    console.log(JSON.stringify(this.mockData.links));
+    addDAddrData(newData) {
+      console.log ("counter: "+ this.count);
+      //TODO/////////////// temp
+      if(this.count>1){
+        newData = temp_data2;
+      }
+      //////////////////////
+      this.count++;
+      for (var n in newData.nodes) {
 
-  this.dataSubject.next(this.mockData);
+        this.mockData.nodes.push(newData.nodes[n]);
+      }
+      for (var l  in newData.links) {
+        this.mockData.links.push(newData.links[l]);
+      }
+      console.log(JSON.stringify(this.mockData.nodes));
+      console.log(JSON.stringify(this.mockData.links));
 
+      this.dataSubject.next(this.mockData);
   }
 
+
+  clearData(){
+    this.mockData = {
+      "nodes": [
+
+      ],
+      "links": [
+      ]
+    };
+    this.dataSubject.next(this.mockData);
+
+  }
   //////////////////////////
 
   private url = url;
