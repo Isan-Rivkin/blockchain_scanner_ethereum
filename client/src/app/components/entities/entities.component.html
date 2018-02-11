@@ -3,17 +3,15 @@
     <h1>Entity List</h1>
 
     <form class="navbar-form navbar-left">
-      <div class="form-group">
+      <div class="input-group-btn search  -panel">
         <!--<label class="container"> No Good Filter: <input type="radio" checked="checked" name="good"-->
                                                <!--[(ngModel)]="searchEntity.good" ></label>-->
         <!--<label class="container"> Good: <input type="radio"  name="good"-->
                       <!--[(ngModel)]="searchEntity.good" ></label>-->
-
-        <label class="container"> Bad: <input type="radio"  name="bad"
-                                              [(ngModel)]="!searchEntity.good"  >
-          <span class="checkmark"></span></label>
-        <label class="container"> Good: <input type="radio"  name="good"
-                                              [(ngModel)]="!searchEntity.good"  ><span class="checkmark"></span></label>
+        <form action="">
+        Bad: <input type="radio"  name="bad" [(ngModel)]="searchEntity.good" value="bad"  >
+        Good: <input type="radio"  name="good" [(ngModel)]="searchEntity.good" value="good">
+        </form>
 
 
       <p>Interesting: <input type="text"
@@ -25,40 +23,44 @@
                                [(ngModel)]="searchText" /></p>
         <button (click)="searchEntities()" class="btn btn-default">Search</button>
       </div>
-
-    </form>
-
-
-    <div class="input-group-btn search-panel">
-      <h3> Search By:</h3>
+      <div class="input-group-btn group-by-panel">
+        <h3> Search By:</h3>
 
 
-      <ul class="dropdown-menu" role="menu">
-        <li><a  (click)=groupBy(1)>Good</a></li>
-        <li><a  (click)=groupBy(2)>Interesting</a></li>
-        <li><a  (click)=groupBy(3)>Type</a></li>
+        <ul class="dropdown-menu" role="menu">
+          <li><a  (click)=groupBy(1)>Good</a></li>
+          <li><a  (click)=groupBy(2)>Interesting</a></li>
+          <li><a  (click)=groupBy(3)>Type</a></li>
 
-      </ul>
+        </ul>
 
 
-        <p>Good: <input type="checkbox"
-                        name="good" value="ON"
-                        [(ngModel)]="groupByhEntity.good" /></p>
+        <form action="">
+          Bad: <input type="radio"  name="bad" [(ngModel)]="groupByhEntity.good" value="bad"  >
+          Good: <input type="radio"  name="good" [(ngModel)]="groupByhEntity.good" value="good">
+        </form>
+
         <p>Interesting: <input type="text"
                                name="interesting"
                                [(ngModel)]="groupByhEntity.interesting" /></p>
         <p>Type: <input type="text"
-                             name="interesting"
-                             [(ngModel)]="groupByhEntity.type" /></p>
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-         <h5>{{filterName}}</h5><span id="search_concept"></span> <span class="caret"></span>
-      </button>
+                        name="interesting"
+                        [(ngModel)]="groupByhEntity.type" /></p>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <h5>{{filterName}}</h5><span id="search_concept"></span> <span class="caret"></span>
+        </button>
         <button (click)="groupByEntities()" class="btn btn-default">Search</button>
 
 
 
 
-    </div>
+      </div>
+
+
+    </form>
+
+
+
 
     <table class="table table-bordered table-striped table-hover">
       <thead>
