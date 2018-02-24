@@ -80,6 +80,8 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
       //   nodes: [],
       //   links: []
       // };
+
+      //TODO - count the search address type for the chart in Home Page
       this.sendAddres(this.root);
     }
   }
@@ -92,7 +94,7 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
       //////////////////////temp
       this.explorerAgentService.addDAddrData(temp_data);
       //////////////////////////
-      //TODO
+      //TODO- update the service with the new data
       //this.explorerAgentService.addDAddrData(newData);
 
 
@@ -149,10 +151,7 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
 
    }
   private updateData(){
-
-
-
-    //treturn test data
+    //return test data
     var newData = this.explorerAgentService.getTestTransactions();
     //console.log("new data: " + JSON.stringify(newData));
 

@@ -35,7 +35,7 @@ export class ExplorerAgentService {
       console.log ("counter: "+ this.count);
       //TODO/////////////// temp
       if(this.count>1){
-        newData = temp_data2;
+        newData = temp_data2; // newData = neaData
       }
       //////////////////////
       this.count++;

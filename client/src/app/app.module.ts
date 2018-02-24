@@ -20,6 +20,8 @@ import {FooterComponent} from './components/footer/footer.component'
 import {EtherAboutComponent} from './components/ether-about/ether-about.component'
 import {routerConfig} from './components/navbar/top-menu.config'
 
+import { ChartsModule } from 'ng2-charts';
+import {UsersSearchChartComponent} from './components/users-search-chart/users-search-chart.component'
 
 // const appRoutes: Routes = [
 //   { path: 'Explorer', component: D3graphComponent },
@@ -42,11 +44,14 @@ import {routerConfig} from './components/navbar/top-menu.config'
     FooterComponent,
     EtherAboutComponent,
 
+    UsersSearchChartComponent,
+
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    ChartsModule,
     AgmCoreModule.forRoot({
       // please get your own API key here:
       // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
