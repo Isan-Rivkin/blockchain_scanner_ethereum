@@ -17,16 +17,21 @@ class Article {
 
 export class EtherAboutComponent  {
   flag:boolean;
+  post:string;
 
   constructor( ) {
     this.flag =true;
+    this.post = "ether";
   }
 
-  displayPost(){
-    this.flag = !this.flag;
-    this.getDisplayEther();
-    this.getDisplayBit();
+  displayPost(post){
+    if(this.post!= post) {
+      this.post = post;
+      this.flag = !this.flag;
+      this.getDisplayEther();
+      this.getDisplayBit();
 
+    }
   }
 
   getDisplayEther(){

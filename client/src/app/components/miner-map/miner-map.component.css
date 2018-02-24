@@ -2,11 +2,9 @@ agm-map {
   height: 400px;
 }
 
-
-* {
-  font-family: Lato;
-}
-
 a {
   color: darkblue;
+}
+h1{
+  text-shadow: 2px 2px #ddd;
 }

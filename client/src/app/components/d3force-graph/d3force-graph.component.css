@@ -29,3 +29,15 @@
    vertical-align: middle;
    width: 30%;
  }
+
+ input#str {
+   width: 150px;
+   -webkit-transition: width .35s ease-in-out;
+   transition: width .35s ease-in-out;
+ }
+ input#str:focus {
+   width: 350px;
+ }
+ h2{
+   text-shadow: 2px 2px #ddd;
+ }

@@ -10,3 +10,8 @@ app-footer {
 router-outlet{
   height: 450px;
 }
+
+
+.h1{
+  text-shadow: 2px 2px #ddd;
+}

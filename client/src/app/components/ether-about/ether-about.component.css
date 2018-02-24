@@ -17,3 +17,12 @@
 .col-md-6[_ngcontent-c4] {
   width: 100%;
 }
+
+p {
+  font-family: myFont;
+}
+
+@font-face {
+  font-family: myFont;
+  src: url('../../../assets/font/Sansation_Light.ttf') format('truetype')
+}
