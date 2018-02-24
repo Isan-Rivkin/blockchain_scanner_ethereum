@@ -38,6 +38,10 @@ export const routerConfig: Routes = [
     component: EtherAboutComponent
   },
   {
+    path: 'ether_about/blockchain1',
+    component: EtherAboutComponent
+  },
+  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full'

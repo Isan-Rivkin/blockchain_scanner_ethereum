@@ -1,33 +1,39 @@
-import { Component, OnInit ,Input,NgModuleRef,Compiler,Injector,NgModule,ViewChild,ViewContainerRef} from '@angular/core';
-import {Router, ActivatedRoute} from "@angular/router";
+import { Component} from '@angular/core';
+
 
 
 class Article {
   title: string;
   html: string;
+
 }
 
 @Component({
   selector: 'app-ether-about',
-  templateUrl:'./ether-about.component2.html',
+  templateUrl:'./ether-about.component.html',
   styleUrls: ['./ether-about.component.css']
 })
 
 
 export class EtherAboutComponent  {
+  flag:boolean;
 
-  urlId;
-
-  constructor(private route: ActivatedRoute ) {
-
-  }
-  ngOnInit(): void {
-    this.route.params
-      .subscribe(params => {
-        console.log(params);
-        this.urlId = params;
-      })
+  constructor( ) {
+    this.flag =true;
   }
 
+  displayPost(){
+    this.flag = !this.flag;
+    this.getDisplayEther();
+    this.getDisplayBit();
+
+  }
+
+  getDisplayEther(){
+     return this.flag? "" : "none";
+  }
+  getDisplayBit(){
+    return this.flag? "none" : "";
+  }
 
 }
