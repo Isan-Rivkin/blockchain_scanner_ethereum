@@ -28,6 +28,8 @@ export class EntitiesComponent implements OnInit {
 
   ngOnInit() {
     this.getEntities();
+    this.groupByhEntity.good = "good";
+    this.searchEntity.good = "good";
   }
 
   getEntities() {
@@ -37,11 +39,26 @@ export class EntitiesComponent implements OnInit {
   }
 
   searchEntities() {
-    this.entitiesService.getSearchedEntity({params:this.searchEntity,text: this.searchText});
+    if(!this.searchEntity.interesting){
+      alert("Interesting empty");
+    }
+    else if(!this.searchText){
+      alert("Search Text empty");
+    }
+     else this.entitiesService.getSearchedEntity({params:this.searchEntity,text: this.searchText});
   }
 
   groupByEntities(){
-    this.entitiesService.getGroupByEntity({flag:this.groupByNum, group_type: this.groupByhEntity});
+    if(!this.groupByhEntity.interesting){
+      alert("Interesting empty");
+    }
+    else if(!this.groupByhEntity.type){
+      alert("Type empty");
+    }
+    else if (this.filterName ==="Filter By"){
+      alert("Choose filter by");
+    }
+    else this.entitiesService.getGroupByEntity({flag:this.groupByNum, group_type: this.groupByhEntity});
   }
   groupBy(num){
     this.groupByNum= num;
@@ -53,7 +70,7 @@ export class EntitiesComponent implements OnInit {
       case 3:this.filterName = "Type";
         break;
       default:
-        this.filterName = "Filte By";
+        this.filterName = "Filter By";
     }
   }
 
@@ -68,8 +85,10 @@ export class EntitiesComponent implements OnInit {
 
   showAddEntityForm() {
     // resets form if edited entity
-    if(this.entities.length) {
-      this.newEntity = {};
+    if(this.entities) {
+      if(this.entities.length) {
+        this.newEntity = {};
+      }
     }
     this.entityForm = true;
     this.isNewForm = true;

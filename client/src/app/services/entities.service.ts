@@ -51,10 +51,6 @@ export class EntitiesService {
 
   }
 
-  getGroupByEntity(query){
-    this.socket.emit('group_by_entity', query);
-
-  }
 
   addEntity(entity: Entity) {
     this.socket.emit('add_entity', entity);
@@ -78,8 +74,19 @@ export class EntitiesService {
 
   }
 
+
   getSearchedEntity(entity){
+
+    console.log("SearchedEntity: " + JSON.stringify(entity));
     this.socket.emit('search_entity', entity);
   }
+
+  getGroupByEntity(query){
+    console.log("GroupByEntity: " + JSON.stringify(query  ));
+    this.socket.emit('group_by_entity', query);
+
+  }
+
+
 
 }
