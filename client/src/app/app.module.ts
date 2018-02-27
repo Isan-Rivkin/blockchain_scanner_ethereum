@@ -23,6 +23,8 @@ import {routerConfig} from './components/navbar/top-menu.config'
 import { ChartsModule } from 'ng2-charts';
 import {UsersSearchChartComponent} from './components/users-search-chart/users-search-chart.component'
 
+import {EtherPriceChartComponent} from './components/ether-price-chart/ether-price-chart.component'
+
 // const appRoutes: Routes = [
 //   { path: 'Explorer', component: D3graphComponent },
 //   { path: '', component: AppComponent },
@@ -45,6 +47,7 @@ import {UsersSearchChartComponent} from './components/users-search-chart/users-s
     EtherAboutComponent,
 
     UsersSearchChartComponent,
+    EtherPriceChartComponent,
 
   ],
   imports: [

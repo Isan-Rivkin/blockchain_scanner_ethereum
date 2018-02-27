@@ -9,6 +9,7 @@
     "body-parser": "~1.18.2",
     "cheerio": "^1.0.0-rc.2",
     "cookie-parser": "^1.4.3",
+    "csvtojson": "^1.1.9",
     "debug": "~2.6.9",
     "express": "~4.15.5",
     "fs": "0.0.1-security",
