@@ -13,6 +13,7 @@ import {text} from "@angular/core/src/render3/instructions";
 export class EntitiesComponent implements OnInit {
 
   entities;
+  groupby_entities;
   entityForm: boolean = false;
   editEntityForm: boolean = false;
   isNewForm: boolean;
@@ -39,10 +40,10 @@ export class EntitiesComponent implements OnInit {
   }
 
   searchEntities() {
-    if(!this.searchEntity.interesting){
-      alert("Interesting empty");
-    }
-    else if(!this.searchText){
+    // if(!this.searchEntity.interesting){
+    //   alert("Interesting empty");
+    // }
+    if(!this.searchText){
       alert("Search Text empty");
     }
      else this.entitiesService.getSearchedEntity({params:this.searchEntity,text: this.searchText});

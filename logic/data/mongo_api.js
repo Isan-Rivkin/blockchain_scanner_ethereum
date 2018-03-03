@@ -98,8 +98,16 @@ var queryDocument = function(db,client,query, callback) {
     var interesting = query.type.interesting;
     var q = buildQuery(comment,good,interesting);
     collection.find(q).toArray(function(err, docs){
-        client.close();
-        callback(docs);
+
+        if(docs.length == 0){
+            collection.find(buildAddrQuery(comment,good,interesting)).toArray(function(err, docs){
+                client.close();
+                callback(docs);
+            });
+        }else{
+           client.close();
+           callback(docs);
+        }
     });
 };
 
@@ -110,13 +118,17 @@ module.exports.query_entities = function(query,callback){
 };
 
 function buildQuery(comment,good,interesting){
-    console.log("params : " );
-    console.log("com : |" + comment + "|");
-    console.log("good: " + good);
-    console.log(" interesting : " + interesting);
+    if(good == "good")
+        good = true;
+    else if(good == "bad")
+        good = false;
+    if(interesting == '1' || interesting == '2' || interesting == '3')
+        interesting = parseInt(interesting);
     if(comment == undefined)
         comment = '';
     var theQuery ={'comment': {$regex : comment,$options: 'i'}};
+    var addressQuery = {'address': {$regex : comment,$options: 'i'}};
+
     if(good != undefined && interesting >=1 && interesting <=3){
         theQuery ={'comment': {$regex : comment,$options: 'i'},'good':good, 'interesting': interesting};
     }
@@ -129,15 +141,45 @@ function buildQuery(comment,good,interesting){
     return theQuery;
 }
 
+function buildAddrQuery(comment,good,interesting){
+    if(good == "good")
+        good = true;
+    else if(good == "bad")
+        good = false;
+    if(interesting == '1' || interesting == '2' || interesting == '3')
+        interesting = parseInt(interesting);
+    console.log("params : " );
+    console.log("com : |" + comment + "|");
+    console.log("good: " + good);
+    console.log("interesting : " + interesting);
+    if(comment == undefined)
+        comment = '';
+    var theQuery ={'address': {$regex : comment,$options: 'i'}};
+    if(good != undefined && interesting >=1 && interesting <=3){
+        theQuery ={'address': {$regex : comment,$options: 'i'},'good':good, 'interesting': interesting};
+    }
+    if(good != undefined && !(interesting>=1&&interesting <=3)){
+        theQuery ={'address': {$regex : comment,$options: 'i'},'good':good};
+    }
+    if(interesting >=1 && interesting <=3 && good ==undefined){
+        theQuery = {'address': {$regex : comment,$options: 'i'},'interesting':interesting};
+    }
+    return theQuery;
+}
+
 /* GROUP BY OPERATION */
 
 var groupBy = function(db,client,param,callback){
+    console.log("----------------------------------------------");
+    console.log(param);
+    console.log("----------------------------------------------");
     // Get the documents collection
     param = "$"+param;
     const collection = db.collection(entities_collection);
     collection.aggregate([
         {"$group":{_id: param,count:{$sum:1}}}
     ]).toArray(function(err, docs) {
+        console.log(docs);
         if(err) {console.log(err);}
         client.close();
         callback(docs);
@@ -146,7 +188,12 @@ var groupBy = function(db,client,param,callback){
 
 module.exports.group_by_good_aggregate = function(group_param,callback){
     connect((db,client)=>{
-        groupBy(db,client,group_param,callback);
+        let qparam = '';
+        let flag = parseInt(group_param['flag']);
+        if(flag == 1) {qparam = 'good' }
+        if(flag == 2) {qparam = 'interesting' }
+        if(flag == 3) {qparam = 'type' }
+        groupBy(db,client,qparam,callback);
     });
 };
 

@@ -155,6 +155,26 @@
       </p>
 
     </form>
+
+    <!-- Isan start -->
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+      <tr>
+        <th class="text-center">Group Value</th>
+        <th class="text-center">Count</th>
+        <th class="text-center">&nbsp;</th>
+      </tr>
+
+
+      </thead>
+      <tbody>
+      <tr *ngFor="let entity of entities">
+        <td>{{ entity._id }}</td>
+        <td>{{ entity.count }}</td>
+      </tr>
+      </tbody>
+    </table>
+    <!-- Isan end -->
   </div>
 </div>
 

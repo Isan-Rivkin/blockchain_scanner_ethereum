@@ -82,7 +82,6 @@ export class EntitiesService {
   }
 
   getGroupByEntity(query){
-    console.log("GroupByEntity: " + JSON.stringify(query  ));
     this.socket.emit('group_by_entity', query);
 
   }
