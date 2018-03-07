@@ -10,12 +10,17 @@ import {ExplorerAgentService} from "../../services/explorer-agent.service";
   providers: [HomeService],
 })
 export class HomeComponent implements OnInit {
-  Openning:string = "Tomersioto And Isan";
+  Openning:string = "Ethereum Blockchain explorer";
+  Urls: string = "";
+  Type: string = "";
   constructor(private home:HomeService) {
 
   }
   ngOnInit() {
-    this.home.cookieRequest().subscribe();
+    this.home.cookieRequest().subscribe(data=>{
+      this.Urls = data[0]['urls'];
+      this.Type = "Suggested resources for "+ data[0]['type'];
+    });
   }
 
 }

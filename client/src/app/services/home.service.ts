@@ -8,6 +8,8 @@ export class HomeService {
   }
   cookieRequest(){
     // post article result
-      return this.http.get('http://localhost:3000/cookie').map(res=>res);
+      return this.http.get('http://localhost:3000/cookie').map(res=>{
+        return res;
+      });
   }
 }

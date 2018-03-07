@@ -52,22 +52,22 @@ app.use('/cookie',(req,res,next)=>{
                     let relative = parseInt(visits) / parseInt(totalVisits);
                     if(relative < medium){ // beginner
                         db.getAllArticles(c.BEGINNER,(err,articles_doc)=>{
-                            console.log(articles_doc);
+                            res.json(articles_doc);
                         });
                     }else if(relative >= medium && relative <= expert){ // medium
                         db.getAllArticles(c.MEDIUM,(err,articles_doc)=>{
-                            console.log(articles_doc);
+                            res.json(articles_doc);
                         });
                     }else{ // expert
                         db.getAllArticles(c.EXPERT,(err,articles_doc)=>{
-                            console.log(articles_doc);
+                            res.json(articles_doc);
                         });
                     }
                 });
             })
         });
     }
-    next();
+    //next();
 });
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
