@@ -17,4 +17,5 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.home.cookieRequest().subscribe();
   }
+
 }

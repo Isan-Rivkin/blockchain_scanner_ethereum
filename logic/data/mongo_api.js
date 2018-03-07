@@ -4,8 +4,68 @@ const constants = require('../constants');
 
 const db_name = constants.DB;
 const entities_collection = constants.ENTITIES_COLLECTION;
+const analytics_collection = constants.ANALYTICS_COLLECTION;
+const articles_collection = constants.CURATED_ARTICLES_COLLECTION;
 const url = constants.DB_CONNECTION_STRING;
 
+/* articles */
+
+module.exports.getAllArticles = function(type,callback){
+    connect((db,client)=>{
+        const collection = db.collection(articles_collection);
+        collection.find({type:type}).toArray(function(err, docs) {
+            client.close();
+            callback(err,docs);
+        });
+    });
+};
+
+/* analytics */
+
+module.exports.getAllVisitors = function(callback){
+    connect((db,client)=>{
+        const collection = db.collection(analytics_collection);
+        collection.find({}).toArray(function(err, docs) {
+            client.close();
+            let counter = 0;
+            docs.forEach(visitor=>{
+                counter += visitor.visits;
+            })
+            callback(counter);
+        });
+    });
+}
+module.exports.addAnalytic = function(id,callback){
+    connect((db,client)=>{
+        const collection = db.collection(analytics_collection);
+        collection.insertMany([{cookie:id,visits:1}],(err,res)=>{
+            client.close();
+            callback(err,res);
+        });
+    });
+}
+
+module.exports.updateAnalytic = function(id,callback){
+    connect((db,client)=>{
+        const collection = db.collection(analytics_collection);
+        collection.find({cookie:id}).toArray(function(err, docs) {
+            collection.updateOne({cookie:id},{$set:{visits:docs[0].visits+1}},(err,result)=>{
+                client.close();
+                callback(err,result);
+            })
+        });
+    });
+}
+
+module.exports.getAnalytic = function(id,callback){
+    connect((db,client)=>{
+        const collection = db.collection(analytics_collection);
+        collection.find({cookie:id}).toArray(function(err, docs) {
+            client.close();
+            callback(docs);
+        });
+    });
+}
 // Use connect method to connect to the server
 var connect = function(callback){
     MongoClient.connect(url, function(err, client) {
@@ -13,7 +73,9 @@ var connect = function(callback){
         const db = client.db(db_name);
         callback(db,client);
     });
-}
+};
+
+
 /* ADD OPERATION */
 
 var insertDocuments = function(db,client,items_list, callback) {
