@@ -50,13 +50,13 @@ export class EntitiesComponent implements OnInit {
   }
 
   groupByEntities(){
-    if(!this.groupByhEntity.interesting){
-      alert("Interesting empty");
-    }
-    else if(!this.groupByhEntity.type){
-      alert("Type empty");
-    }
-    else if (this.filterName ==="Filter By"){
+    // if(!this.groupByhEntity.interesting){
+    //   alert("Interesting empty");
+    // }
+    // else if(!this.groupByhEntity.type){
+    //   alert("Type empty");
+    // }
+    if (this.filterName ==="Filter By"){
       alert("Choose filter by");
     }
     else this.entitiesService.getGroupByEntity({flag:this.groupByNum, group_type: this.groupByhEntity});
