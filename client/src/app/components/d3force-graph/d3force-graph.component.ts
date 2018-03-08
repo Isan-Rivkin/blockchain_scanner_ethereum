@@ -92,10 +92,10 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
     this.explorerAgentService.getTransactions().subscribe(newData=>{
       console.log("new Data: "+ JSON.stringify(newData));
       //////////////////////temp
-      this.explorerAgentService.addDAddrData(temp_data);
+      //this.explorerAgentService.addDAddrData(temp_data);
       //////////////////////////
       //TODO- update the service with the new data
-      //this.explorerAgentService.addDAddrData(newData);
+      this.explorerAgentService.addDAddrData(newData);
 
 
     });
@@ -106,7 +106,9 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
       if(data.links.length!=0){
       this.draw(data);
       }
-      else{alert ("Start");}
+      else{
+        //alert ("Start");
+      }
     });
 
   }
@@ -287,7 +289,7 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
     tooltip.transition()
       .duration(200)
       .style("opacity", .9);
-    tooltip	.html("Address: " + d.address + "<br/>"  + "Type: " + d.type +"</br>"+ "Ether: " + d.ether + "<br/>"+ "OutTX: " + d.outTX + "<br/>"+ "Valid Address: " + d.is_valid_address + "<br/>")
+    tooltip.html("Address: " + d.address + "<br/>"  + "Type: " + this.getType(d.group) +"</br>")
       .style("left", (d3.event.pageX) + "px")
       .style("top", (d3.event.pageY - 28) + "px");
   }
@@ -297,8 +299,27 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
 
   }
 
+  private getType(num) {
+    switch (num) {
+      case 1:
+        return 'user';
+      case 2:
+        return 'distribute';
+      case 3:
+        return 'erc20';
+      case 4:
+        return 'contract_non_erc';
+      case 5:
+        return 'miner';
+      case 6:
+        return 'exchange';
+      case 7:
+        return 'uUser';
+      default :
+        return 'uUser';
 
-
+    }
+  }
   ngOnDestroy(){
 
   }

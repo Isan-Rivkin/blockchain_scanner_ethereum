@@ -38,17 +38,17 @@
         </ul>
 
 
-        <form action="">
-          Bad: <input type="radio"  name="bad" [(ngModel)]="groupByhEntity.good" value="bad"  checked="checked"  >
-          Good: <input type="radio"  name="good" [(ngModel)]="groupByhEntity.good" value="good">
-        </form>
+        <!--<form action="">-->
+          <!--Bad: <input type="radio"  name="bad" [(ngModel)]="groupByhEntity.good" value="bad"  checked="checked"  >-->
+          <!--Good: <input type="radio"  name="good" [(ngModel)]="groupByhEntity.good" value="good">-->
+        <!--</form>-->
 
-        <p>Interesting: <input type="text"
-                               name="interesting"
-                               [(ngModel)]="groupByhEntity.interesting" placeholder="1-3"/></p>
-        <p>Type: <input type="text"
-                        name="interesting"
-                        [(ngModel)]="groupByhEntity.type" /></p>
+        <!--<p>Interesting: <input type="text"-->
+                               <!--name="interesting"-->
+                               <!--[(ngModel)]="groupByhEntity.interesting" placeholder="1-3"/></p>-->
+        <!--<p>Type: <input type="text"-->
+                        <!--name="interesting"-->
+                        <!--[(ngModel)]="groupByhEntity.type" /></p>-->
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
           <h5>{{filterName}}</h5><span id="search_concept"></span> <span class="caret"></span>
         </button>
@@ -168,8 +168,8 @@
 
       </thead>
       <tbody>
-      <tr *ngFor="let entity of entities">
-        <td>{{ entity._id }}</td>
+      <tr *ngFor="let entity of groupby_entities">
+        <td>{{ entity.__id }}</td>
         <td>{{ entity.count }}</td>
       </tr>
       </tbody>

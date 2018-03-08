@@ -35,7 +35,16 @@ export class EntitiesComponent implements OnInit {
 
   getEntities() {
     this.entitiesService.getEntitiesFromData().subscribe(newdata => {
-      this.entities = newdata;
+      if(newdata[0] != null && newdata[0] != undefined){
+        if(newdata[0].__id != undefined && newdata[0].__id != null){ // group  by
+          this.groupby_entities = newdata;
+          this.entities = [];
+        }else{
+          this.entities = newdata;
+          this.groupby_entities = [];
+        }
+      }
+      console.log(JSON.stringify(newdata));
     })
   }
 
@@ -46,7 +55,10 @@ export class EntitiesComponent implements OnInit {
     if(!this.searchText){
       alert("Search Text empty");
     }
-     else this.entitiesService.getSearchedEntity({params:this.searchEntity,text: this.searchText});
+     else {
+      //this.groupby_entities=[];
+      this.entitiesService.getSearchedEntity({params:this.searchEntity,text: this.searchText});
+    }
   }
 
   groupByEntities(){
@@ -59,7 +71,10 @@ export class EntitiesComponent implements OnInit {
     if (this.filterName ==="Filter By"){
       alert("Choose filter by");
     }
-    else this.entitiesService.getGroupByEntity({flag:this.groupByNum, group_type: this.groupByhEntity});
+    else {
+      //this.entities = [];
+      this.entitiesService.getGroupByEntity({flag:this.groupByNum, group_type: this.groupByhEntity})
+    };
   }
   groupBy(num){
     this.groupByNum= num;

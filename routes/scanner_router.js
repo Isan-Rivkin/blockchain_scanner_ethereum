@@ -279,7 +279,7 @@ module.exports = {
                             links = final.links;
                             nodes = final.nodes;
                             console.log("RESULT => " + JSON.stringify(the_res));
-                            socket.emit('scan_response',{nodes:nodes,edges:links});
+                            socket.emit('scan_response',{nodes:nodes,links:links});
                         });
                     }
                     });

@@ -242,6 +242,9 @@ var groupBy = function(db,client,param,callback){
         {"$group":{_id: param,count:{$sum:1}}}
     ]).toArray(function(err, docs) {
         console.log(docs);
+        docs.forEach(doc=>{
+            doc.__id = doc['_id'];
+        });
         if(err) {console.log(err);}
         client.close();
         callback(docs);
