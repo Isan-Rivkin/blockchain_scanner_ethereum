@@ -272,8 +272,12 @@ module.exports = {
                         socket.emit('scan_response',{nodes:null,edges:null});
                     }else{
                         buildView(res.nodes,res.edges,(the_res)=>{
+
                             var links = the_res.edges;
                             var nodes = the_res.nodes;
+                            var final = d3_parse(nodes,links);
+                            links = final.links;
+                            nodes = final.nodes;
                             console.log("RESULT => " + JSON.stringify(the_res));
                             socket.emit('scan_response',{nodes:nodes,edges:links});
                         });
@@ -282,6 +286,19 @@ module.exports = {
                 }
             });
         });
+
+
+        function d3_parse(nodes,links){
+            for(var i=0;i<nodes.length;++i){
+                nodes[i].id = i+1;
+                nodes[i].address = nodes[i].name;
+            }
+            for(var i=0;i<links.length;++i){
+                links[i].source = nodes[links[i].source].id;
+                links[i].target = nodes[links[i].target].id;
+            }
+            return {nodes:nodes,links:links};
+        }
     }
 }
 
