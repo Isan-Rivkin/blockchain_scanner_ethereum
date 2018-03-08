@@ -99,9 +99,9 @@ export class EtherPriceChartComponent {
 
 
   async ngAfterViewInit() {
-    await this.loadScript("https://files.coinmarketcap.com/static/widget/currency.js")
+  await this.loadScript("https://files.coinmarketcap.com/static/widget/currency.js")
 
-  }
+}
 
   private loadScript(scriptUrl: string) {
     return new Promise((resolve, reject) => {
