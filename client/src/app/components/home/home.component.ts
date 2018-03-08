@@ -18,7 +18,10 @@ export class HomeComponent implements OnInit {
   }
   ngOnInit() {
     this.home.cookieRequest().subscribe(data=>{
-      this.Urls = data[0]['urls'];
+      for(var i=0;i<data[0]['urls'].length;++i){
+        this.Urls += data[0]['urls'][i];
+        this.Urls += '\n';
+      }
       this.Type = "Suggested resources for "+ data[0]['type'];
     });
   }
