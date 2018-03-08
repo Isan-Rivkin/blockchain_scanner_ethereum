@@ -287,7 +287,7 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
     tooltip.transition()
       .duration(200)
       .style("opacity", .9);
-    tooltip	.html("Address: " + d.address + "<br/>"  + "Type: " + d.type +"</br>"+ "Ether: " + d.ether + "<br/>"+ "OutTX: " + d.outTX + "<br/>"+ "Valid Address: " + d.is_valid_address + "<br/>")
+    tooltip	.html("Address: " + d.address + "<br/>"  + "Type: " + this.getType(d.group) +"</br>"+ "Ether: " + d.ether + "<br/>"+ "OutTX: " + d.outTX + "<br/>"+ "Valid Address: " + d.is_valid_address + "<br/>")
       .style("left", (d3.event.pageX) + "px")
       .style("top", (d3.event.pageY - 28) + "px");
   }
@@ -297,7 +297,29 @@ export class D3forceGraphComponent implements OnInit, OnDestroy{
 
   }
 
+private getType(num){
+    switch (num){
+      case 1:return 'user';
+      case 2:return 'distribute';
+      case 3:return 'erc20';
+      case 4:return 'contract_non_erc';
+      case 5:return 'miner';
+      case 6:return 'exchange';
+      case 7:return 'uUser';
+      default : return 'uUser';
 
+
+    }
+}
+// var entities_map={
+//   'user' :1,
+//   'distribuer':2,
+//   "erc20":3 ,
+//   "contract_non_erc":4,
+//   'miner':5,
+//   'exchange':6,
+//   'uUser':7
+// };
 
   ngOnDestroy(){
 
