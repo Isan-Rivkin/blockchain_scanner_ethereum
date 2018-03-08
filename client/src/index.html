@@ -23,4 +23,26 @@
 <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+
+
+<script>
+  function loadDoc() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("demo").innerHTML =
+          this.responseText;
+      }
+    };
+    var url = 'https://raw.githubusercontent.com/Isan-Rivkin/EthereumBlockchainScanner/master/ajax_creators.txt';
+    xhttp.open("GET", url, true);
+    xhttp.send();
+  }
+</script>
+
+<div id="demo">
+  <button type="button" onclick="loadDoc()">Show Creators</button>
+</div>
+
+
 </html>
