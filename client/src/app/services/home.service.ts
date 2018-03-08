@@ -7,7 +7,9 @@ export class HomeService {
   constructor(private http:HttpClient) {
   }
   cookieRequest(){
-      console.log("sending GET !!#$%$#@!#$%^$#^%&^$#%^%$");
-      return this.http.get('http://localhost:3000/cookie').map(res=>res);
+    // post article result
+      return this.http.get('http://localhost:3000/cookie').map(res=>{
+        return res;
+      });
   }
 }

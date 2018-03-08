@@ -19,14 +19,13 @@ export class EtherPriceChartComponent {
 ////////////////////
   ngOnInit(): void {
     //this.updateData();
+
     this.etherDataService.getData().subscribe(newdata => {
 
       //console.log("History data: "+ JSON.stringify(newdata));
       this.lineChartData.push(newdata['price']);
       this.lineChartLabels = newdata['date'];
 
-      //console.log("price: " +this.lineChartData);
-      //console.log("date: " + this.lineChartLabels);
     });
 
     this.etherDataService.getPrice().subscribe(price=>{
@@ -36,6 +35,7 @@ export class EtherPriceChartComponent {
     this.etherDataService.getPercent().subscribe(percent=>{
       this.ether_percent = parseInt(JSON.stringify(percent));
     });
+
   }
 
   // lineChart

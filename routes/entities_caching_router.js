@@ -29,6 +29,7 @@ module.exports = {
                 // add entity to db
                 scanner.is_valid_eth_account(entity.address,(valid)=>{
                     if(valid){
+                        entity.address =entity.address.toLowerCase();
                         db.insert_entities([entity],(result)=>{
                             socket.emit('add_entity',{status:1, msg:'success'});
                             db.list_entity(entities=>{

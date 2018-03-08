@@ -13,6 +13,7 @@ import {text} from "@angular/core/src/render3/instructions";
 export class EntitiesComponent implements OnInit {
 
   entities;
+  groupby_entities;
   entityForm: boolean = false;
   editEntityForm: boolean = false;
   isNewForm: boolean;
@@ -39,23 +40,23 @@ export class EntitiesComponent implements OnInit {
   }
 
   searchEntities() {
-    if(!this.searchEntity.interesting){
-      alert("Interesting empty");
-    }
-    else if(!this.searchText){
+    // if(!this.searchEntity.interesting){
+    //   alert("Interesting empty");
+    // }
+    if(!this.searchText){
       alert("Search Text empty");
     }
      else this.entitiesService.getSearchedEntity({params:this.searchEntity,text: this.searchText});
   }
 
   groupByEntities(){
-    if(!this.groupByhEntity.interesting){
-      alert("Interesting empty");
-    }
-    else if(!this.groupByhEntity.type){
-      alert("Type empty");
-    }
-    else if (this.filterName ==="Filter By"){
+    // if(!this.groupByhEntity.interesting){
+    //   alert("Interesting empty");
+    // }
+    // else if(!this.groupByhEntity.type){
+    //   alert("Type empty");
+    // }
+    if (this.filterName ==="Filter By"){
       alert("Choose filter by");
     }
     else this.entitiesService.getGroupByEntity({flag:this.groupByNum, group_type: this.groupByhEntity});

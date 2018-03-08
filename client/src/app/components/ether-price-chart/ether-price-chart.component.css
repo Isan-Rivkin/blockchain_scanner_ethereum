@@ -1,8 +1,11 @@
 .coinmarketcap-currency-widget {
   position: fixed;
-  left: 50%;
+
+  width:0px;
+  height:0px;
 }
 
 .ether-price {
-  width: 300px;
+  width: 0px;
+  height:0px;
 }
