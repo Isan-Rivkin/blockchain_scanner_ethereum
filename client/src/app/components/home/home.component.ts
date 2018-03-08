@@ -10,7 +10,7 @@ import {ExplorerAgentService} from "../../services/explorer-agent.service";
   providers: [HomeService],
 })
 export class HomeComponent implements OnInit {
-  Openning:string = "Tomersioto And Isan";
+  Openning:string = "Ethereum Price";
   constructor(private home:HomeService) {
 
   }
