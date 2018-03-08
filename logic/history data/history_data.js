@@ -15,8 +15,6 @@ var converter = new Converter({});
 // require("fs").createReadStream("./data.csv").pipe(converter);
 //
 
-module.exports = {
-    getJson: function () {
         converter.fromFile("./export-EtherPrice.csv",function(err,result){
             // if an error has occured then handle it
             if(err){
@@ -29,10 +27,7 @@ module.exports = {
 
             // log our json to verify it has worked
             console.log("get Json func: "+ JSON.stringify(json));
-            return json;
-        });
 
-    }
-}
+            });
 
 

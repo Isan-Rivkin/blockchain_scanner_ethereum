@@ -46,7 +46,7 @@ export class EtherPriceChartComponent {
 
 
   public lineChartOptions:any = {
-    responsive: true
+    responsive: false
   };
   public lineChartColors:Array<any> = [
     { // grey
@@ -96,4 +96,20 @@ export class EtherPriceChartComponent {
   // public chartHovered(e:any):void {
   //   console.log(e);
   // }
+
+
+  async ngAfterViewInit() {
+  await this.loadScript("https://files.coinmarketcap.com/static/widget/currency.js")
+
+}
+
+  private loadScript(scriptUrl: string) {
+    return new Promise((resolve, reject) => {
+      const scriptElement = document.createElement('script')
+      scriptElement.src = scriptUrl
+      scriptElement.onload = resolve
+      document.body.appendChild(scriptElement)
+    })
+  }
+
 }
