@@ -9,7 +9,7 @@ const verbose = true;
 
 
 
-API_KEY = '9EVWVAFQNS1UWXAAMTXSTHY599GYPAD4T1';
+API_KEY = '';
 my_addr = '0x0607B0c8cF73D916b3EF1463bb6fB9f19e9D5D98';
 BASE_URL = 'http://api.etherscan.io/api?';
 
